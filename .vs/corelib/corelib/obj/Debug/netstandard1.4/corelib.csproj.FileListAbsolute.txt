@@ -1,0 +1,8 @@
+D:\RENDER\littleRender\.vs\corelib\corelib\bin\Debug\netstandard1.4\corelib.deps.json
+D:\RENDER\littleRender\.vs\corelib\corelib\bin\Debug\netstandard1.4\corelib.dll
+D:\RENDER\littleRender\.vs\corelib\corelib\bin\Debug\netstandard1.4\corelib.pdb
+D:\RENDER\littleRender\.vs\corelib\corelib\obj\Debug\netstandard1.4\corelib.csprojResolveAssemblyReference.cache
+D:\RENDER\littleRender\.vs\corelib\corelib\obj\Debug\netstandard1.4\corelib.csproj.CoreCompileInputs.cache
+D:\RENDER\littleRender\.vs\corelib\corelib\obj\Debug\netstandard1.4\corelib.AssemblyInfo.cs
+D:\RENDER\littleRender\.vs\corelib\corelib\obj\Debug\netstandard1.4\corelib.dll
+D:\RENDER\littleRender\.vs\corelib\corelib\obj\Debug\netstandard1.4\corelib.pdb

@@ -19,14 +19,17 @@ namespace corelib
         }
     }
 
-    public class Vector
+    public class Vector:Vec3
+    {
+        public Vector(float xx,float yy,float zz)
+        {
+            x = xx; y = yy; z = zz;
+        }
+    }
+    
+    public class Ray
     {
         public Vec3 o;
         public Vec3 d;
-    }
-
-    public class Ray
-    {
-        public Vector o;
     }
 }
