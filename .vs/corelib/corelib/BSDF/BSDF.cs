@@ -24,7 +24,7 @@ namespace corelib.BSDF
 
 
 
-        public void SetColor(float r ,float g,float b)
+        public void SetRGB(float r ,float g,float b)
         {
             
         }

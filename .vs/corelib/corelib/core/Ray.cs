@@ -29,7 +29,7 @@ namespace corelib
     
     public class Ray
     {
-        public Vec3 o;
-        public Vec3 d;
+        public Vec3 o { get; set; }
+        public Vec3 d { get; set; }
     }
 }
