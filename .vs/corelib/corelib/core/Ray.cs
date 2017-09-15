@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace corelib
+namespace corelib.core
 {
 
     public class Vec3

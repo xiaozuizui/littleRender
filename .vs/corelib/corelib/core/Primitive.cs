@@ -1,13 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using corelib.bsdf;
 
-namespace corelib
+namespace corelib.core
 {
-    interface Primitive
+    public class Primitive:PrimitiveInterface
     {
-        void GetBsdf();
-        bool isInsection();
+        public virtual BSDF GetBsdf() { return null; }
 
+        public virtual bool isInsection() { return false; }
+        
+
+        
     }
 }
