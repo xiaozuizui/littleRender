@@ -7,11 +7,12 @@ namespace corelib.core
 {
     public class Primitive:PrimitiveInterface
     {
-        public virtual BSDF GetBsdf() { return null; }
+        public BSDF bsdf;
+       // public virtual BSDF GetBsdf() { return null; }
 
         public virtual bool isInsection() { return false; }
-        
 
+        public virtual BSDF GetBSDF() { return null; }
         
     }
 }

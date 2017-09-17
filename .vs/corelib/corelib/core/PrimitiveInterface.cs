@@ -8,7 +8,7 @@ namespace corelib.core
     interface PrimitiveInterface
     {
         
-        BSDF GetBsdf();
+        BSDF GetBSDF();
         bool isInsection();
 
     }
