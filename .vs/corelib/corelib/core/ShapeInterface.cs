@@ -6,7 +6,7 @@ namespace corelib.core
 {
     interface ShapeInterface
     {
-        bool Intersect();
+        bool Intersect(Transform o2w,Ray r,DifferentialGeometry dg);
         
     }
 }

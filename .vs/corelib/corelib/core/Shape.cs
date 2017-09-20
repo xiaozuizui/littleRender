@@ -4,8 +4,8 @@ using System.Text;
 
 namespace corelib.core
 {
-    public class Shape:ShapeInterface
+    public class Shape:BaseFun,ShapeInterface
     {
-           public virtual bool Intersect() { return false; } 
+           public virtual bool Intersect(Transform o2w,Ray r,DifferentialGeometry dg) { return false; } 
     }
 }

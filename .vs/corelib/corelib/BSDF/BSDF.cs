@@ -5,7 +5,7 @@ using System.Text;
 
 namespace corelib.bsdf
 {   
-     public class Color
+     public class Color 
     {
         public Color() { R = 0;G = 0;B = 0; }
         public Color(float r,float g,float b)
