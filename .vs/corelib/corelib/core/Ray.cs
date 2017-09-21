@@ -52,5 +52,10 @@ namespace corelib.core
     {
         public Vec3 o { get; set; }
         public Vec3 d { get; set; }
+
+        public float maxt { get; set; }
+
+        public float mint { get; set; }
+
     }
 }

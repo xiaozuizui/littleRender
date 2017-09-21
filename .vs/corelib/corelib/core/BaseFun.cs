@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Text;
 using corelib.core;
-
 namespace corelib.core
 {
     public abstract class BaseFun
@@ -19,6 +18,27 @@ namespace corelib.core
             return new Matrix4x4(r);
         }
 
+        public bool Quadratic(float A, float B, float C, params float [] t ) //求一元二次方程跟
+        {
+            // Find quadratic discriminant
+            float discrim = B * B - 4.0f * A * C;
+            if (discrim < .0f) return false;
+            float rootDiscrim = (float)Math.Sqrt(discrim);
 
+            // Compute quadratic _t_ values
+            float q;
+            if (B < 0) q = -.5f * (B - rootDiscrim);
+            else q = -.5f * (B + rootDiscrim);
+            t[0] = q / A;
+            t[1] = C / q;
+            if (t[0] > t[1])
+            {
+                float temp = t[0];
+                t[0] = t[1];
+                t[1] = temp;
+            }
+              
+            return true;
+        }
     }
 }
