@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using corelib.core;
 
-namespace corelib.sphere
+namespace corelib.core
 {
-    class Mesh:Shape
+    interface BaseNum
     {
 
     }

@@ -5,7 +5,7 @@ using corelib.core;
 using corelib.bsdf;
 
 
-namespace corelib.sphere
+namespace corelib.shapes
 {
     public class Quad:Shape
     {
