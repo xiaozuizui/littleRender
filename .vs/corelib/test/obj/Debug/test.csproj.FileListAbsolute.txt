@@ -1,0 +1,9 @@
+D:\RENDER\littleRender\.vs\corelib\test\bin\Debug\test.exe.config
+D:\RENDER\littleRender\.vs\corelib\test\bin\Debug\test.exe
+D:\RENDER\littleRender\.vs\corelib\test\bin\Debug\test.pdb
+D:\RENDER\littleRender\.vs\corelib\test\bin\Debug\corelib.dll
+D:\RENDER\littleRender\.vs\corelib\test\bin\Debug\corelib.pdb
+D:\RENDER\littleRender\.vs\corelib\test\obj\Debug\test.csprojResolveAssemblyReference.cache
+D:\RENDER\littleRender\.vs\corelib\test\obj\Debug\test.csproj.CoreCompileInputs.cache
+D:\RENDER\littleRender\.vs\corelib\test\obj\Debug\test.exe
+D:\RENDER\littleRender\.vs\corelib\test\obj\Debug\test.pdb

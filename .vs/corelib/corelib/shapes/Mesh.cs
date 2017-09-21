@@ -15,9 +15,33 @@ namespace corelib.shapes
         public Mesh()
         {
             P = new List<Point3>();
-            F = new List<Face>();
+            vertexIndex = new int[nverts * 3];
+           // F = new List<Face>();
         }
-        protected List<Point3> P { get; set; }
-        protected List<Face> F { get; set; }
+        
+        public Mesh(int nt,int nv,ref int [] vi,ref List<Point3> p)
+        {
+            ntris = nt;
+            nverts = nv;
+            P = new List<Point3>();
+            P = p;
+            vertexIndex = new int[nverts * 3];
+        }
+        private List<Point3> P { get; set; }
+        //private List<Face> F { get; set; }
+        private int[] vertexIndex { get; set; }
+        private int ntris, nverts;
+    }
+
+    public class Triangle:Shape
+    {
+
+        public Triangle()
+        {
+            v = new int[3];
+        }
+        private  Mesh m { get; set; }
+        private int[] v;
+        
     }
 }

@@ -10,6 +10,5 @@ namespace corelib.core
         
         BSDF GetBSDF();
         bool isInsection();
-
     }
 }

@@ -6,6 +6,6 @@ namespace corelib.core
 {
     public class Shape:BaseFun,ShapeInterface
     {
-           public virtual bool Intersect(Transform o2w,Ray r,DifferentialGeometry dg) { return false; } 
+           public virtual bool Intersect(ref Transform o2w,Ray r,ref DifferentialGeometry dg) { return false; } 
     }
 }

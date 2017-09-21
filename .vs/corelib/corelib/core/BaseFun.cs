@@ -6,7 +6,24 @@ namespace corelib.core
 {
     public abstract class BaseFun
     {
-        public Matrix4x4 Multiply(Matrix4x4 m1,Matrix4x4 m2)
+        protected float INFINITY = 99999999;
+
+        protected float Lerp(float t,float v1,float v2)
+        {
+            return (1.0f - t) * v1 + t * v2;
+        }
+
+        protected float Radians(float deg)
+        {
+            return ((float)Math.PI/180.0f)*deg;
+        }
+
+        protected float  Degress(float rad)
+        {
+            return (180.0f / (float)Math.PI) * rad;
+        }
+
+        protected Matrix4x4 Multiply(Matrix4x4 m1,Matrix4x4 m2)
         {
             float[,] r = new float[4, 4];
             for (int i = 0; i < 4; ++i)
@@ -18,7 +35,7 @@ namespace corelib.core
             return new Matrix4x4(r);
         }
 
-        public bool Quadratic(float A, float B, float C, params float [] t ) //求一元二次方程跟
+        protected bool Quadratic(float A, float B, float C, params float [] t ) //求一元二次方程跟
         {
             // Find quadratic discriminant
             float discrim = B * B - 4.0f * A * C;

@@ -1,10 +1,15 @@
-﻿using System;
+﻿
+using System;
 
 namespace corelib.core
 {
 
     public class Vec3
     {
+        public static Vec3 operator +(Vec3 v1, Vec3 v2)
+        {
+            return new Vec3(v1.x + v2.x, v1.y + v2.y, v1.z + v2.z);
+        }
         public Vec3(float xx=0,float yy=0,float zz=0)
         {
             x = xx;y = yy; z = zz;
@@ -12,14 +17,13 @@ namespace corelib.core
         public float x { get; set; }
         public float y { get; set; }
         public float z { get; set; }
-        public static Vec3 operator +(Vec3 v1,Vec3 v2)
-        {
-            return new Vec3(v1.x + v2.x, v1.y + v2.y, v1.z + v2.z);
-        }
+        
     }
 
     public class Point3:Vec3
     {
+        static public Point3 operator +(Point3 p,Vector v) { return new Point3(p.x + v.x, p.y + v.y, p.z + v.z); }
+        static public Vector operator -(Point3 p1,Point3 p2) { return new Vector(p2.x - p1.x, p2.y - p1.y, p2.z - p1.z); }
         public Point3(float xx=0, float yy=0, float zz=0)
         {
             x = xx; y = yy; z = zz;
@@ -50,8 +54,17 @@ namespace corelib.core
     }
     public class Ray
     {
-        public Vec3 o { get; set; }
-        public Vec3 d { get; set; }
+        public Ray(Point3 p, Vector v, float maxT = 1.0f / 0, float minT = 0f)
+        {
+            o = p;d = v;maxt = maxT;mint = minT;
+        }
+
+        public Point3 GetHitPoint(float thit)
+        {
+            return o +  thit*d;
+        }
+        public Point3 o { get; set; }
+        public Vector d { get; set; }
 
         public float maxt { get; set; }
 

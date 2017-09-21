@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using corelib.core;
+using corelib.shapes;
 
 namespace test
 {
@@ -14,7 +15,11 @@ namespace test
             Vector v1 = new Vector(1.0f,2.0f,3.0f);
             Vector v2 = new Vector(1.0f, 2.0f, 3.0f);
 
-            Vector v3 = v1 + v2;
+            Sphere sp = new Sphere(1.0f);
+            Ray R = new Ray(new Point3(1.0f, 1.0f, 1.0f), new Vector(-0.5f,-0.5f,-0.5f),2,0);
+            //bool hit =  sp.Intersect(null, R, null);
+            Mesh m = new Mesh();
+            
         }
     }
 }
