@@ -19,7 +19,14 @@ namespace test
             Ray R = new Ray(new Point3(1.0f, 1.0f, 1.0f), new Vector(-0.5f,-0.5f,-0.5f),2,0);
             //bool hit =  sp.Intersect(null, R, null);
             Mesh m = new Mesh();
+
+           f(v1);
+
             
+        }
+        static public void  f(Vector v1)
+        {
+            v1.x = 10.0f;
         }
     }
 }

@@ -7,8 +7,9 @@ namespace corelib.core
 {
     interface PrimitiveInterface
     {
-        
+        UInt32 PrimitiveId { get; set; }
+        UInt32 nextPrimitiveId { get; set; }
         BSDF GetBSDF();
-        bool isInsection();
+        bool CanInsection();
     }
 }

@@ -12,8 +12,7 @@ namespace corelib.shapes
         {
             radius = r;
         }
-        float radius;
-        public override bool Intersect(ref Transform o2w, Ray ray,ref DifferentialGeometry dg)
+        public override bool Intersect(Ray ray,ref DifferentialGeometry dg)
         {
             float A = ray.d.x * ray.d.x + ray.d.y * ray.d.y + ray.d.z * ray.d.z;
             float B = 2 * (ray.d.x * ray.o.x + ray.d.y * ray.o.y + ray.d.z * ray.o.z);
@@ -36,5 +35,7 @@ namespace corelib.shapes
             }
             return true;
         }
+
+        private float radius;
     }
 }

@@ -6,7 +6,10 @@ namespace corelib.core
 {
     interface ShapeInterface
     {
-        bool Intersect(ref Transform o2w,Ray r,ref DifferentialGeometry dg);
+        Transform o2w { get; set; }
+        Transform w2o { get; set; }
+        bool Intersect( Ray r,ref DifferentialGeometry dg);
+        
         
     }
 }
