@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using corelib.bsdf;
-
+using corelib.lights;
 namespace corelib.core
 {
     public class Primitive:PrimitiveInterface
@@ -18,10 +18,11 @@ namespace corelib.core
         
     }
 
-    public class GeometricPrimitive:Primitive
+    public class GeometricPrimitive:Primitive,PrimitiveInterface
     {
         private Shape shape;
-        private Mat
+        private Material material;
+        private AreaLight arealight;
     }
 
 }
