@@ -4,9 +4,12 @@ using System.Text;
 
 namespace corelib.core
 {
-    class Camera
+    interface Camera
     {
-        public void GenerateRay()
-        { }
+       
+        float GenerateRay(CameraSample sample, Ray ray);
+        Transform cam2world { get; set; }
+      
+
     }
 }

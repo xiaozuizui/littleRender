@@ -6,7 +6,7 @@ namespace corelib.core
 {
     public class Matrix4x4
     {
-
+        //public fun
         public Matrix4x4()
         {
             m = new float[4, 4];
@@ -28,12 +28,14 @@ namespace corelib.core
             m[3, 0] = a41;m[3, 1] = a42;m[3, 2] = a43;m[3, 3] = a44;
         }
 
+
+    
         public float [,] m;
 
     }
 
     public class Transform
     {
-        public Matrix4x4 m;
+        private Matrix4x4 m,mInv;
     }
 }

@@ -3703,7 +3703,7 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\赵立璟\\.nuget\\packages\\": {}
+    "C:\\Users\\78589\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
@@ -3711,14 +3711,14 @@
       "hideWarningsAndErrors": true
     },
     "restore": {
-      "projectUniqueName": "D:\\RENDER\\littleRender\\.vs\\corelib\\corelib\\corelib.csproj",
+      "projectUniqueName": "G:\\littlerender\\.vs\\corelib\\corelib\\corelib.csproj",
       "projectName": "corelib",
-      "projectPath": "D:\\RENDER\\littleRender\\.vs\\corelib\\corelib\\corelib.csproj",
-      "packagesPath": "C:\\Users\\赵立璟\\.nuget\\packages\\",
-      "outputPath": "D:\\RENDER\\littleRender\\.vs\\corelib\\corelib\\obj\\",
+      "projectPath": "G:\\littlerender\\.vs\\corelib\\corelib\\corelib.csproj",
+      "packagesPath": "C:\\Users\\78589\\.nuget\\packages\\",
+      "outputPath": "G:\\littlerender\\.vs\\corelib\\corelib\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\赵立璟\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\78589\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [

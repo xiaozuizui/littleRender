@@ -9,8 +9,19 @@ public struct window
     int yStart { get; set; }
     int yEnd { get; set; }
 }
+
+
+
 namespace corelib.core
 {
+
+    public struct CameraSample
+    {
+        float imageX, imageY;
+        float lensU, lensV;
+        float time;
+    }
+
     abstract public class Sampler
     {
         public int xPixelStrat {get;set;}
