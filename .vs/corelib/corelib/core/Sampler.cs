@@ -17,9 +17,10 @@ namespace corelib.core
 
     public struct CameraSample
     {
-        float imageX, imageY;
-        float lensU, lensV;
-        float time;
+        public float imageX { get; set; }
+        public float imageY { get; set; }
+        public float lensU, lensV;
+        public float time;
     }
 
     abstract public class Sampler

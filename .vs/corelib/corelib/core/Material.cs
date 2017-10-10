@@ -4,7 +4,7 @@ using System.Text;
 
 namespace corelib.core
 {
-    public class Material
+    interface MaterialInterface
     {
     }
 }

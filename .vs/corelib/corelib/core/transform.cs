@@ -17,11 +17,13 @@ namespace corelib.core
             m = mm;
         }
 
+       
         public Matrix4x4(float a11,float a12,float a13,float a14,
                                 float a21,float a22,float a23,float a24,
                                 float a31,float a32,float a33,float a34,
                                 float a41,float a42,float a43,float a44)
         {
+            m = new float[4, 4];
             m[0, 0] = a11;m[0, 1] = a12;m[0, 2] = a13;m[0, 3] = a14;
             m[1, 0] = a21;m[1, 1] = a22;m[1, 2] = a23;m[1, 3] = a24;
             m[2, 0] = a31;m[2, 1] = a32;m[2, 2] = a33;m[2, 3] = a34;
@@ -34,8 +36,24 @@ namespace corelib.core
 
     }
 
-    public class Transform
+    public class Transform:BaseFun
     {
-        private Matrix4x4 m,mInv;
+        public Transform()
+        {
+            m = new Matrix4x4();
+            mInv = new Matrix4x4();
+        }
+         
+        public Transform(Matrix4x4 M)
+        {
+            m = new Matrix4x4();
+            mInv = new Matrix4x4();
+
+            m = M;
+            mInv = Inverse(M);
+        }
+
+        private Matrix4x4 m;
+        private Matrix4x4 mInv;
     }
 }

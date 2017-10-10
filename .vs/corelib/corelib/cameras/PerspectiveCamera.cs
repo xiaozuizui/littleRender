@@ -8,7 +8,7 @@ namespace corelib.cameras
     class PerspectiveCamera:Camera
     {
 
-        public PerspectiveCamera(Transform c2w,)
+        public PerspectiveCamera(Transform c2w) { }
         public float GenerateRay(CameraSample sample, Ray ray)
         {
             return 0;

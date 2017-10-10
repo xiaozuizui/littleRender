@@ -75,8 +75,8 @@ namespace corelib.core
         /// </summary>
         /// <param name="m"></param>
         /// <returns></returns>
-        Matrix4x4 Inverse(Matrix4x4 m) 
-        {
+        public Matrix4x4 Inverse( Matrix4x4 m) 
+        { 
 
             int[] indxc = new int[4];
             int[] indxr = new int[4];
@@ -85,7 +85,9 @@ namespace corelib.core
                 ipiv[i] = 0;
 
             float[,] minv = new float[4, 4];
-            minv = m.m;
+            for (int i = 0; i < 4; i++)//使用值传递
+                for (int j = 0; j < 4; j++)
+                    minv[i, j] = m.m[i, j];
 
             for (int i = 0; i< 4; i++)
             {

@@ -6,3 +6,11 @@ D:\RENDER\littleRender\.vs\corelib\corelib\obj\Debug\netstandard1.4\corelib.cspr
 D:\RENDER\littleRender\.vs\corelib\corelib\obj\Debug\netstandard1.4\corelib.AssemblyInfo.cs
 D:\RENDER\littleRender\.vs\corelib\corelib\obj\Debug\netstandard1.4\corelib.dll
 D:\RENDER\littleRender\.vs\corelib\corelib\obj\Debug\netstandard1.4\corelib.pdb
+G:\littlerender\.vs\corelib\corelib\bin\Debug\netstandard1.4\corelib.deps.json
+G:\littlerender\.vs\corelib\corelib\obj\Debug\netstandard1.4\corelib.csprojResolveAssemblyReference.cache
+G:\littlerender\.vs\corelib\corelib\obj\Debug\netstandard1.4\corelib.csproj.CoreCompileInputs.cache
+G:\littlerender\.vs\corelib\corelib\obj\Debug\netstandard1.4\corelib.AssemblyInfo.cs
+G:\littlerender\.vs\corelib\corelib\obj\Debug\netstandard1.4\corelib.dll
+G:\littlerender\.vs\corelib\corelib\obj\Debug\netstandard1.4\corelib.pdb
+G:\littlerender\.vs\corelib\corelib\bin\Debug\netstandard1.4\corelib.dll
+G:\littlerender\.vs\corelib\corelib\bin\Debug\netstandard1.4\corelib.pdb

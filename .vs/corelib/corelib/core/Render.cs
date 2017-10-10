@@ -13,7 +13,7 @@ namespace corelib.core
         {
             for(int i = 0;i<sampler.SamplePerPixel;i++)
             {
-                camera.GenerateRay();
+              //  camera.GenerateRay();
             }
         }
     }
