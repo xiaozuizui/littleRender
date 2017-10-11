@@ -38,22 +38,32 @@ namespace corelib.core
 
     public class Transform:BaseFun
     {
+        
+
         public Transform()
         {
             m = new Matrix4x4();
             mInv = new Matrix4x4();
+            
         }
          
+        
         public Transform(Matrix4x4 M)
         {
-            m = new Matrix4x4();
-            mInv = new Matrix4x4();
+         ;
 
             m = M;
             mInv = Inverse(M);
         }
 
-        private Matrix4x4 m;
-        private Matrix4x4 mInv;
+        public Transform(Matrix4x4 M,Matrix4x4 invM)
+        {
+            
+
+            m = M;
+            mInv = invM;
+        }
+        public Matrix4x4 m { get; set; }
+        public Matrix4x4 mInv { get; set; }
     }
 }

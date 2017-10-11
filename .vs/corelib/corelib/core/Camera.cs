@@ -14,9 +14,15 @@ namespace corelib.core
 
     }
 
-    public class Camera:CameraInterface
+    public class Camera: BaseFun,CameraInterface
     {
-     
+        
+        public Camera(Transform c2w,Film f)
+        {
+            cam2world = c2w;
+            film = f;
+        }
+
         public virtual float GenerateRay(CameraSample sample, Ray ray) { return 0; }
 
         public virtual float GenerateRayDifferential(CameraSample sample, RayDifferential rd)
@@ -43,5 +49,6 @@ namespace corelib.core
         }
 
         public Transform cam2world { get; set; }
+        public Film film { get; set; }
     }
 }

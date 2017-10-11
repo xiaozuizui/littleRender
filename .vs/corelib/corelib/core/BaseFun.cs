@@ -52,6 +52,13 @@ namespace corelib.core
             return (180.0f / (float)Math.PI) * rad;
         }
 
+        protected Transform Multiply(Transform t1, Transform t2)
+        {
+            Matrix4x4 m1 = Multiply(t1.m, t2.m);
+            Matrix4x4 m2 = Multiply(t1.mInv, t2.mInv);
+            return new Transform(m1, m2);
+        }
+
         /// <summary>
         /// 矩阵乘法
         /// </summary>
@@ -70,12 +77,76 @@ namespace corelib.core
             return new Matrix4x4(r);
         }
 
+
+        protected Transform Scale(float x, float y, float z)
+        {
+            Matrix4x4 m = new Matrix4x4(x, 0, 0, 0,
+                0, y, 0, 0,
+                0, 0, z, 0,
+                0, 0, 0, 1);
+            Matrix4x4 minv = new Matrix4x4(1.0f / x,     0,     0,     0,
+                   0,     1.0f / y,     0,     0,
+                   0,         0,     1.0f / z, 0,
+                   0,         0,     0,     1);
+
+            return new Transform(m, minv);
+        }
+
+
+        protected Transform RotateX(float angle)
+        {
+            float sin_t = (float)Math.Sin(Radians(angle));
+            float cos_t = (float)Math.Cos(Radians(angle));
+            Matrix4x4 m = new Matrix4x4(1,     0,      0, 0,
+                0, cos_t, -sin_t, 0,
+                0, sin_t,  cos_t, 0,
+                0,     0,      0, 1);
+            return new Transform(m, Transpose(m));
+        }
+
+
+        protected Transform RotateY(float angle)
+        {
+            float sin_t = (float)Math.Sin(Radians(angle));
+            float cos_t = (float)Math.Cos(Radians(angle));
+            Matrix4x4 m = new Matrix4x4(cos_t,   0,  sin_t, 0,
+                 0,   1,      0, 0,
+                -sin_t,   0,  cos_t, 0,
+                 0,   0,   0,    1);
+            return new Transform(m, Transpose(m));
+        }
+
+
+
+        protected Transform RotateZ(float angle)
+        {
+            float sin_t = (float)Math.Sin(Radians(angle));
+            float cos_t = (float)Math.Cos(Radians(angle));
+            Matrix4x4 m = new Matrix4x4(cos_t, -sin_t, 0, 0,
+                sin_t,  cos_t, 0, 0,
+                0,      0, 1, 0,
+                0,      0, 0, 1);
+            return new Transform(m, Transpose(m));
+        }
+
         /// <summary>
-        /// Inverse
+        /// Transpose 值传递
         /// </summary>
         /// <param name="m"></param>
         /// <returns></returns>
-        public Matrix4x4 Inverse( Matrix4x4 m) 
+        protected Matrix4x4 Transpose(Matrix4x4 m) {
+                return new  Matrix4x4(m.m[0,0], m.m[1,0], m.m[2,0], m.m[3,0],
+                    m.m[0,1], m.m[1,1], m.m[2,1], m.m[3,1],
+                    m.m[0,2], m.m[1,2], m.m[2,2], m.m[3,2],
+                    m.m[0,3], m.m[1,3], m.m[2,3], m.m[3,3]);
+    }
+
+    /// <summary>
+    /// Inverse
+    /// </summary>
+    /// <param name="m"></param>
+    /// <returns></returns>
+        protected Matrix4x4 Inverse( Matrix4x4 m) 
         { 
 
             int[] indxc = new int[4];
