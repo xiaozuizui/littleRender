@@ -59,6 +59,12 @@ namespace corelib.core
             return new Transform(m1, m2);
         }
 
+        protected Transform Multiply(Transform t1, Transform t2,Transform t3)
+        {
+
+            return Multiply(Multiply(t1, t2), t3);
+        }
+
         /// <summary>
         /// 矩阵乘法
         /// </summary>
@@ -77,8 +83,27 @@ namespace corelib.core
             return new Matrix4x4(r);
         }
 
+        protected Matrix4x4 Multiply(Matrix4x4 m1, Matrix4x4 m2,Matrix4x4 m3)
+        {
+            
+            return Multiply(Multiply(m1,m2),m3);
+        }
 
-        protected Transform Scale(float x, float y, float z)
+        protected Transform Translate(Vector delta)
+        {
+             Matrix4x4 m = new Matrix4x4(1, 0, 0, delta.x,
+                0, 1, 0, delta.y,
+                0, 0, 1, delta.z,
+                0, 0, 0,       1);
+            Matrix4x4 minv = new Matrix4x4(1, 0, 0, -delta.x,
+                       0, 1, 0, -delta.y,
+                       0, 0, 1, -delta.z,
+                       0, 0, 0,        1);
+            return  new Transform(m, minv);
+    }
+
+
+    protected Transform Scale(float x, float y, float z)
         {
             Matrix4x4 m = new Matrix4x4(x, 0, 0, 0,
                 0, y, 0, 0,

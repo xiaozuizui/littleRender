@@ -8,4 +8,7 @@ namespace corelib.core
     {
         
     }
+
+    public class Light
+    { }
 }

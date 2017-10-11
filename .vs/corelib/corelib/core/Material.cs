@@ -7,4 +7,6 @@ namespace corelib.core
     interface MaterialInterface
     {
     }
+    public class Material
+    { }
 }
