@@ -5,11 +5,11 @@ using corelib.core;
 
 namespace corelib.cameras
 {
-    public class ProjectiveCamera:Camera
+    public abstract class ProjectiveCamera:Camera
     {
        
 
-       public ProjectiveCamera(Transform c2w,Transform proj,Film f, float lensr, float focald, float [] screenWindow) :base(c2w,f)
+       public ProjectiveCamera(Transform c2w,Transform proj,Film f, float lensr, float focald, float [] screenWindow) :base(c2w,f) 
         {
             // Initialize depth of field parameters
             lensRadius = lensr;
@@ -19,10 +19,10 @@ namespace corelib.cameras
             CameraToScreen = proj;
 
             // Compute projective camera screen transformations
-            ScreenToRaster = Multiply(
+            ScreenToRaster = Multiply( //
 
-               Scale((float)film.xResolution,
-                                   (float)film.yResolution, 1.0f),
+               Scale(film.xResolution,
+                                   film.yResolution, 1.0f),
                 Scale(1.0f / (screenWindow[1] - screenWindow[0]),
                       1.0f / (screenWindow[2] - screenWindow[3]), 1.0f) ,
                       
@@ -30,14 +30,14 @@ namespace corelib.cameras
 
 
             RasterToScreen = Inverse(ScreenToRaster);
-            RasterToCamera = Inverse(CameraToScreen) * RasterToScreen;
+            RasterToCamera = Multiply(Inverse(CameraToScreen) , RasterToScreen);
         }
 
-       public  float GenerateRay(CameraSample sample, Ray ray) { return 0; }
-       public Transform cam2world { get; set; }
+       
+       
 
-        Transform CameraToScreen, RasterToCamera;
-        Transform ScreenToRaster, RasterToScreen;
-        float lensRadius, focalDistance;
+        protected Transform CameraToScreen, RasterToCamera; 
+        protected Transform ScreenToRaster, RasterToScreen;
+        protected float lensRadius, focalDistance;
     }
 }

@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using corelib.core;
 using corelib.shapes;
-
+using corelib.cameras;
 namespace test
 {
     class main
@@ -22,7 +22,8 @@ namespace test
 
             Matrix4x4 M = new Matrix4x4(0.832801f, 0.182353f, 0.522677f, -0, -0, 0.944187f, -0.329411f, -0, 0.553573f, -0.274334f, -0.786319f, -0, -5.59444f, -2.78217f, 7.45666f, 1);
             Transform t = new Transform(M);
-            
+
+           // ProjectiveCamera pjc = new ProjectiveCamera(t, t, null, 2, 2, new float[4] { 1.0f, 2.0f, 3.0f, 4.0f });
         }
         static public void  f(Vector v1)
         {

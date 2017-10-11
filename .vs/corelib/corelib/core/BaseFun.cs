@@ -220,7 +220,8 @@ namespace corelib.core
                 }   
                 indxr[i] = irow;
                 indxc[i] = icol;
-                if (minv[icol, icol] == 0.0f) ;
+                if (minv[icol, icol] == 0.0f)
+                    return null;
                     //Error("Singular matrix in MatrixInvert");
 
                 // Set $m[icol][icol]$ to one by scaling row _icol_ appropriately
@@ -253,16 +254,20 @@ namespace corelib.core
         return  new Matrix4x4(minv);
         }
 
+        protected Transform Inverse(Transform t)
+        {
+            return new Transform(t.mInv, t.m);
+        }
 
-        /// <summary>
-        /// 解一元二次方程
-        /// </summary>
-        /// <param name="A"></param>
-        /// <param name="B"></param>
-        /// <param name="C"></param>
-        /// <param name="t"></param>
-        /// <returns></returns>
-        protected bool Quadratic(float A, float B, float C, params float[] t) //求一元二次方程跟
+            /// <summary>
+            /// 解一元二次方程
+            /// </summary>
+            /// <param name="A"></param>
+            /// <param name="B"></param>
+            /// <param name="C"></param>
+            /// <param name="t"></param>
+            /// <returns></returns>
+            protected bool Quadratic(float A, float B, float C, params float[] t) //求一元二次方程跟
         {
             // Find quadratic discriminant
             float discrim = B * B - 4.0f * A * C;
