@@ -89,6 +89,20 @@ namespace corelib.core
             return Multiply(Multiply(m1,m2),m3);
         }
 
+
+        protected Transform Perspective(float fov, float n, float f)
+        {
+            // Perform projective divide
+            Matrix4x4 persp = new  Matrix4x4(1, 0, 0, 0,
+                                        0, 1, 0, 0,
+                                        0, 0, f / (f - n), -f * n / (f - n),
+                                        0, 0, 1, 0);
+
+            // Scale to canonical viewing volume
+            float invTanAng = 1.0f / (float)Math.Tan(Radians(fov) / 2.0f);
+            return Multiply(Scale(invTanAng, invTanAng, 1),new  Transform(persp));
+        }
+
         protected Transform Translate(Vector delta)
         {
              Matrix4x4 m = new Matrix4x4(1, 0, 0, delta.x,
@@ -286,7 +300,6 @@ namespace corelib.core
                 t[0] = t[1];
                 t[1] = temp;
             }
-
             return true;
         }
 

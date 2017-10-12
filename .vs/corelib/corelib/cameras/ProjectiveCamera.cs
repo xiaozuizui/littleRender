@@ -14,7 +14,7 @@ namespace corelib.cameras
             // Initialize depth of field parameters
             lensRadius = lensr;
             focalDistance = focald;
-
+            
             // Compute projective camera transformations
             CameraToScreen = proj;
 
