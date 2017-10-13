@@ -38,7 +38,8 @@ namespace corelib.core
 
     public class Transform:BaseFun
     {
-        
+
+        static public void operator( (Transform t1 ) { };
 
         public Transform()
         {

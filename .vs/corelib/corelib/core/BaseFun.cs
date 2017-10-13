@@ -282,7 +282,7 @@ namespace corelib.core
             /// <param name="t"></param>
             /// <returns></returns>
             protected bool Quadratic(float A, float B, float C, params float[] t) //求一元二次方程跟
-        {
+            {
             // Find quadratic discriminant
             float discrim = B * B - 4.0f * A * C;
             if (discrim < .0f) return false;
@@ -295,13 +295,13 @@ namespace corelib.core
             t[0] = q / A;
             t[1] = C / q;
             if (t[0] > t[1])
-            {
-                float temp = t[0];
-                t[0] = t[1];
-                t[1] = temp;
-            }
+                {
+                 float temp = t[0];
+                 t[0] = t[1];
+                    t[1] = temp;
+                 }
             return true;
-        }
+            }
 
         /// <summary>
         /// 向量点积

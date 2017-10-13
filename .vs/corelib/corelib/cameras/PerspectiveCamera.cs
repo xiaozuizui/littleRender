@@ -26,6 +26,8 @@ namespace corelib.cameras
         {
             Point3 Pras = new Point3(sample.imageX, sample.imageY, 0);
             Point3 Pcamera;
+
+
             RasterToCamera(Pras, &Pcamera);
             
             *ray = Ray(Point(0, 0, 0), Normalize(Vector(Pcamera)), 0.f, INFINITY);
