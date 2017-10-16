@@ -314,6 +314,11 @@ namespace corelib.core
             return v1.x * v2.x + v1.y * v2.y + v1.z * v2.z;
         }
 
+        protected Vector Normalize(Vector v)
+        {
+            float length = v.Length();
+            return new Vector(v.x / length, v.y / length, v.z / length);
+        }
         /// <summary>
         /// 向量叉积
         /// </summary>
@@ -329,6 +334,39 @@ namespace corelib.core
                           (v1x * v2y) - (v1y * v2x));
         }
 
-        
+        protected Transform LookAtTransform(Point3 pos, Point3 look,  Vector up)
+        {
+            float[,] m = new float[4, 4];
+
+            m[0, 3] = pos.x;
+            m[1, 3] = pos.y;
+            m[2, 3] = pos.z;
+            m[3, 3] = 1;
+
+            // Initialize first three columns of viewing matrix
+            Vector dir = Normalize(look - pos);
+            if (Cross(Normalize(up), dir).Length() == 0)
+            {
+
+                return null;
+            }
+            Vector left = Normalize(Cross(Normalize(up), dir));
+            Vector newUp = Cross(dir, left);
+            m[0, 0] = left.x;
+            m[1, 0] = left.y;
+            m[2, 0] = left.z;
+            m[3, 0] = 0.0f;
+            m[0, 1] = newUp.x;
+            m[1, 1] = newUp.y;
+            m[2, 1] = newUp.z;
+            m[3, 1] = 0.0f;
+            m[0, 2] = dir.x;
+            m[1, 2] = dir.y;
+            m[2, 2] = dir.z;
+            m[3, 2] = 0.0f;
+            Matrix4x4 camToWorld = new Matrix4x4(m); 
+            return  new Transform(Inverse(camToWorld), camToWorld);
+        }
+
     }
 }

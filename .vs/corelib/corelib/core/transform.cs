@@ -39,8 +39,6 @@ namespace corelib.core
     public class Transform:BaseFun
     {
 
-        static public void operator( (Transform t1 ) { };
-
         public Transform()
         {
             m = new Matrix4x4();
@@ -48,7 +46,6 @@ namespace corelib.core
             
         }
          
-        
         public Transform(Matrix4x4 M)
         {
          ;
@@ -63,6 +60,18 @@ namespace corelib.core
 
             m = M;
             mInv = invM;
+        }
+
+        public Point3 CaculatePoint(Point3 pt)//pt 通过transform变换
+        {
+            Point3 ptrans = new Point3();
+            float x = pt.x, y = pt.y, z = pt.z;
+            ptrans.x = m.m[0,0] * x + m.m[0,1] * y + m.m[0,2] * z + m.m[0,3];
+            ptrans.y = m.m[1,0] * x + m.m[1,1] *  y + m.m[1,2] * z + m.m[1,3];
+            ptrans.z = m.m[2,0] * x + m.m[2,1] * y + m.m[2,2] * z + m.m[2,3];
+            float w = m.m[3,0] * x + m.m[3,1] * y + m.m[3,2] * z + m.m[3,3];
+            if (w != 1.0f) ptrans = ptrans/ w;
+            return ptrans;
         }
         public Matrix4x4 m { get; set; }
         public Matrix4x4 mInv { get; set; }

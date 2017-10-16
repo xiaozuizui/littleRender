@@ -5,7 +5,7 @@ using corelib.core;
 
 namespace corelib.cameras
 {
-    class PerspectiveCamera:ProjectiveCamera
+    class PerspectiveCamera : ProjectiveCamera
     {
         /// <summary>
         /// PerspectiveCamera 
@@ -17,20 +17,20 @@ namespace corelib.cameras
         /// <param name="focald">focald</param>
         /// <param name="screenWindow">float[4]</param>
         /// 
-        public PerspectiveCamera(Transform c2w, Film f, float lensr, float focald, float[] screenWindow,float fov) :base(c2w,  c2w,f,lensr,focald,screenWindow)
+        public PerspectiveCamera(Transform c2w, Film f, float lensr, float focald, float[] screenWindow, float fov) : base(c2w, c2w, f, lensr, focald, screenWindow)
         {
-            
+
         }
         //public PerspectiveCamera(Transform c2w) { }
         override public float GenerateRay(CameraSample sample, Ray ray)
         {
-            Point3 Pras = new Point3(sample.imageX, sample.imageY, 0);
+            Point3 Pras = new Point3(sample.imageX, sample.imageY, 0); //相机坐标系中
             Point3 Pcamera;
 
 
-            RasterToCamera(Pras, &Pcamera);
-            
-            *ray = Ray(Point(0, 0, 0), Normalize(Vector(Pcamera)), 0.f, INFINITY);
+            Pcamera = RasterToCamera.CaculatePoint(Pras);//光栅坐标转换为相机坐标 相机为原点
+
+            ray = new Ray(new Point3(0, 0, 0), Normalize(new Vector(Pcamera)), 0.0f, INFINITY);
             // Modify ray for depth of field
             if (lensRadius > 0.)
             {
@@ -52,9 +52,9 @@ namespace corelib.cameras
             CameraToWorld(*ray, ray);
             return 1.f;
         }
-            return 0;
-        }
-        public Transform cam2world { get; set; }
+           
+
+        //public Transform cam2world { get; set; }
 
 
         
