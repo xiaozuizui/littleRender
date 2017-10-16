@@ -329,5 +329,6 @@ namespace corelib.core
                           (v1x * v2y) - (v1y * v2x));
         }
 
+        
     }
 }
