@@ -11,6 +11,7 @@ namespace corelib.core
 
         public  void Run()
         {
+            while(sampler.GetMoreSamples())
             for(int i = 0;i<sampler.SamplePerPixel;i++)
             {
               //  camera.GenerateRay();
