@@ -24,15 +24,16 @@ namespace corelib.cameras
         //public PerspectiveCamera(Transform c2w) { }
         override public float GenerateRay(CameraSample sample, Ray ray)
         {
-            Point3 Pras = new Point3(sample.imageX, sample.imageY, 0); //相机坐标系中
+            Point3 Pras = new Point3(sample.imageX, sample.imageY, 0); //光栅坐标
+
             Point3 Pcamera;
 
 
             Pcamera = RasterToCamera.CaculatePoint(Pras);//光栅坐标转换为相机坐标 相机为原点
 
-            ray = new Ray(new Point3(0, 0, 0), Normalize(new Vector(Pcamera)), 0.0f, INFINITY);
+            ray = new Ray(new Point3(0, 0, 0), Normalize(new Vector(Pcamera)), 0.0f, INFINITY); 
             // Modify ray for depth of field
-            if (lensRadius > 0.)
+            if (lensRadius > 0.0)
             {
                 // Sample point on lens
                 float lensU, lensV;

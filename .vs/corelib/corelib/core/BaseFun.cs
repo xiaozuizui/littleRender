@@ -156,7 +156,6 @@ namespace corelib.core
         }
 
 
-
         protected Transform RotateZ(float angle)
         {
             float sin_t = (float)Math.Sin(Radians(angle));
@@ -273,16 +272,16 @@ namespace corelib.core
             return new Transform(t.mInv, t.m);
         }
 
-            /// <summary>
-            /// 解一元二次方程
-            /// </summary>
-            /// <param name="A"></param>
-            /// <param name="B"></param>
-            /// <param name="C"></param>
-            /// <param name="t"></param>
-            /// <returns></returns>
-            protected bool Quadratic(float A, float B, float C, params float[] t) //求一元二次方程跟
-            {
+        /// <summary>
+        /// 解一元二次方程
+        /// </summary>
+        /// <param name="A"></param>
+        /// <param name="B"></param>
+        /// <param name="C"></param>
+        /// <param name="t"></param>
+        /// <returns></returns>
+        protected bool Quadratic(float A, float B, float C, params float[] t) //求一元二次方程跟
+        {
             // Find quadratic discriminant
             float discrim = B * B - 4.0f * A * C;
             if (discrim < .0f) return false;
@@ -295,13 +294,13 @@ namespace corelib.core
             t[0] = q / A;
             t[1] = C / q;
             if (t[0] > t[1])
-                {
-                 float temp = t[0];
-                 t[0] = t[1];
-                    t[1] = temp;
-                 }
-            return true;
+            {
+                float temp = t[0];
+                t[0] = t[1];
+                t[1] = temp;
             }
+            return true;
+        }
 
         /// <summary>
         /// 向量点积
@@ -367,6 +366,59 @@ namespace corelib.core
             Matrix4x4 camToWorld = new Matrix4x4(m); 
             return  new Transform(Inverse(camToWorld), camToWorld);
         }
+
+        protected void ConcentricSampleDisk(float u1, float u2, ref float dx,ref float dy)
+        {
+            float r, theta;
+            // Map uniform random numbers to $[-1,1]^2$
+            float sx = 2 * u1 - 1;
+            float sy = 2 * u2 - 1;
+
+            // Map square to $(r,\theta)$
+
+            // Handle degeneracy at the origin
+            if (sx == 0.0 && sy == 0.0)
+            {
+                dx = 0.0f;
+                dy = 0.0f;
+                return;
+            }
+            if (sx >= -sy)
+            {
+                if (sx > sy)
+                {
+                    // Handle first region of disk
+                    r = sx;
+                    if (sy > 0.0) theta = sy / r;
+                    else theta = 8.0f + sy / r;
+                }
+                else
+                {
+                    // Handle second region of disk
+                    r = sy;
+                    theta = 2.0f - sx / r;
+                }
+            }
+            else
+            {
+                if (sx <= sy)
+                {
+                    // Handle third region of disk
+                    r = -sx;
+                    theta = 4.0f - sy / r;
+                }
+                else
+                {
+                    // Handle fourth region of disk
+                    r = -sy;
+                    theta = 6.0f + sx / r;
+                }
+            }
+            theta *= (float)Math.PI / 4.0f;
+            dx = r * (float)Math.Cos(theta);
+            dy = r * (float)Math.Sin(theta);
+        }
+
 
     }
 }

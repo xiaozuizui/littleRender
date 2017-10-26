@@ -5,7 +5,7 @@ using corelib.core;
 
 namespace corelib.cameras
 {
-    public abstract class ProjectiveCamera:Camera
+    public abstract class ProjectiveCamera:Camera //投影相机
     {
        
 
