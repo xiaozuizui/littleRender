@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using corelib.Integrator;
 
 namespace corelib.core
 {
@@ -12,30 +13,38 @@ namespace corelib.core
         RGBSpectrum Transmittance();
 
     }
+
+
+
     class SampleRenderer:Renderer
     {
-        Sampler sampler;
-        Camera camera;
+        private Sampler sampler;
+        private Camera camera;
+        private SurfaceIntegrator surfaceIntegrator;
         //Scene
-        SampleRenderer(Scene s)
+        public SampleRenderer(Sampler s,Camera c,SurfaceIntegrator f)
+        {
+            sampler = s;
+            camera = c;
+            surfaceIntegrator = f;
+        }
+
+        public void Renderer(Scene s)
         {
 
         }
 
-        void Renderer(Scene s)
+        public RGBSpectrum Li()
         {
-
+            return null;
         }
 
-        RGBSpectrum Li()
+        public RGBSpectrum Transmittance()
         {
             return null;
         }
 
-        RGBSpectrum Transmittance()
-        {
-            return null;
-        }
+
         public  void Run()
         {
             while(sampler.GetMoreSamples())

@@ -4,8 +4,9 @@ using System.Text;
 
 namespace corelib.core
 {
-    class Renders
+    interface MC_Integrator
     {
+        void Initialization(Scene s,Camera c);
 
     }
 }
