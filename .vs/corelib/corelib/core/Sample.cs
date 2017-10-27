@@ -5,7 +5,23 @@ using corelib.core;
 
 namespace corelib.core
 {
-    class Sample
+    interface CameraSample
     {
+       float imageX { get; set; }
+       float imageY { get; set; }
+       float lensU { get; set; }
+       float lensV { get; set; }
+       float time { get; set; }
+    }
+
+    struct Sample:CameraSample
+    {
+        float CameraSample.imageX { get; set; }
+        float CameraSample.imageY { get; set; }
+        float CameraSample.lensU { get; set; }
+        float CameraSample.lensV { get; set; }
+        float CameraSample.time { get; set; }
+
+        
     }
 }

@@ -14,16 +14,13 @@ public struct window
 
 namespace corelib.core
 {
-
-    public struct CameraSample
+    interface SamplerInterface
     {
-        public float imageX { get; set; }
-        public float imageY { get; set; }
-        public float lensU, lensV;
-        public float time;
+        int GetMoreSamples(Sampler sample);
     }
+    
 
-    abstract public class Sampler
+    public class Sampler:SamplerInterface
     {
         public int xPixelStrat {get;set;}
         public int xPixelEnd { get; set; }
