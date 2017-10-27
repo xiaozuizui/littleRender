@@ -17,4 +17,6 @@ namespace corelib.sampler
             nPixelSamples = spp;
         }
     }
+
+    
 }

@@ -12,6 +12,7 @@ namespace corelib.core
         {
             color = new float[3] { 0.0f,0.0f,0.0f};
         }
+
         public RGBSpectrum(float[] c)
         {
             color = c;

@@ -33,6 +33,8 @@ namespace corelib.core
       //  public Sampler(int xstart,int xend,int ystart,int yend,int spp) { }
        public virtual int GetMoreSamples(Sampler sample) { return 0; }
        public virtual Sampler GetSubSampler() { return null; }
+
+
        public void ComputerSubWindow(int num,int count,window wd)
         {
             int dx = xPixelEnd - xPixelStrat;
