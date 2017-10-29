@@ -27,7 +27,7 @@ namespace corelib.cameras
             Point3 Pras = new Point3(sample.imageX, sample.imageY, 0); //光栅坐标
 
             Point3 Pcamera;
-
+            
 
             Pcamera = RasterToCamera.CaculatePoint(Pras);//光栅坐标转换为相机坐标 相机为原点
 
