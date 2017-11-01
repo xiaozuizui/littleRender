@@ -6,7 +6,7 @@ using System.Text;
 
 namespace corelib.core
 {
-    class RAND //pbrt 
+    public class RAND //pbrt 
     {
         private const UInt32 MATRIX_A = 0x9908b0dfU;
         private const UInt32 UPPER_MASK = 0x80000000U;
