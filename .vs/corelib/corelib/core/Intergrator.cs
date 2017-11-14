@@ -9,4 +9,20 @@ namespace corelib.core
         void Initialization(Scene s,Camera c);
 
     }
+
+    public class SurfaceIntegrator : MC_Integrator
+    {
+        void MC_Integrator.Initialization(Scene s, Camera c)
+        {
+
+        }
+    }
+
+    public class VolumeIntegrator:MC_Integrator
+    {
+        void MC_Integrator.Initialization(Scene s, Camera c)
+        {
+
+        }
+    }
 }

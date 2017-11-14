@@ -21,6 +21,7 @@ namespace corelib.core
         {
             cam2world = c2w;
             film = f;
+            
         }
 
         public virtual float GenerateRay(CameraSample sample, Ray ray) { return 0; }
