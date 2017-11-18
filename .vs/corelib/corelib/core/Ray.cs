@@ -4,7 +4,7 @@ using System;
 namespace corelib.core
 {
 
-    public class Vec3
+    public  class Vec3
     {
         public static Vec3 operator +(Vec3 v1, Vec3 v2)
         {

@@ -73,6 +73,13 @@ namespace corelib.core
             if (w != 1.0f) ptrans = ptrans/ w;
             return ptrans;
         }
+        public Vector CaculateVector(Vector v)
+        {
+            float x = v.x, y = v.y, z = v.z;
+            return new Vector(m.m[0,0] * x + m.m[0,1] * y + m.m[0,2] * z,
+                          m.m[1,0] * x + m.m[1,1] * y + m.m[1,2] * z,
+                          m.m[2,0] * x + m.m[2,1] * y + m.m[2,2] * z);
+        }
         public Matrix4x4 m { get; set; }
         public Matrix4x4 mInv { get; set; }
     }

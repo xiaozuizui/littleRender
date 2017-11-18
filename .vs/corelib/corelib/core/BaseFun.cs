@@ -88,8 +88,12 @@ namespace corelib.core
             
             return Multiply(Multiply(m1,m2),m3);
         }
-        protected Transform Orthpgraphic
 
+        protected Transform Orthographic(float znear, float zfar)
+        {
+            return Multiply(Scale(1.0f, 1.0f, 1.0f / (zfar - znear)) ,
+                   Translate(new Vector(0.0f, 0.0f, -znear)));
+        }
 
         protected Transform Perspective(float fov, float n, float f)
         {
