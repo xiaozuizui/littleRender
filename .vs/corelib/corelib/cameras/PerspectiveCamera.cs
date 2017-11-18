@@ -17,9 +17,9 @@ namespace corelib.cameras
         /// <param name="focald">focald</param>
         /// <param name="screenWindow">float[4]</param>
         /// 
-        public PerspectiveCamera(Transform c2w, Film f, float lensr, float focald, float[] screenWindow, float fov) : base(c2w, c2w, f, lensr, focald, screenWindow)
+        public PerspectiveCamera(Transform c2w, Transform proj,float[] screenWindow,float sopen,float sclose,float lensr,float focald, float fov,Film f) : base(c2w,  proj,  screenWindow,sopen,sclose,lensr,focald,f)
         {
-
+            
         }
         //public PerspectiveCamera(Transform c2w) { }
         override public float GenerateRay(CameraSample sample, Ray ray)
@@ -70,7 +70,7 @@ namespace corelib.cameras
 
 
 
-        public Vector dxCamera { get; set; }
-         public Vector dyCamera { get; set; }
+        private Vector dxCamera { get; set; }
+        private Vector dyCamera { get; set; }
     }
 }

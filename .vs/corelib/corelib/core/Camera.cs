@@ -9,22 +9,23 @@ namespace corelib.core
        
         float GenerateRay(CameraSample sample, Ray ray);
         float GenerateRayDifferential(CameraSample sample, RayDifferential rd);
-        Transform cam2world { get; set; }
-      
+        Transform Cam2World { get; set; }
+        float shutterOpen { get; set; }
+        float shutterClose { get; set; }
 
     }
 
-    public class Camera: BaseFun,CameraInterface
+    public abstract class Camera: BaseFun,CameraInterface
     {
-        
-        public Camera(Transform c2w,Film f)
+
+        public Camera(Transform c2w, float sopen, float sclose, Film f)
         {
-            cam2world = c2w;
+            Cam2World = c2w;
             film = f;
             
         }
 
-        public virtual float GenerateRay(CameraSample sample, Ray ray) { return 0; }
+        public virtual float GenerateRay(CameraSample sample, Ray ray) { return 0; } // return value gives a weight for how much light arriving at the film (most return one) 
 
         public virtual float GenerateRayDifferential(CameraSample sample, RayDifferential rd)
         {
@@ -44,12 +45,16 @@ namespace corelib.core
             float wty = GenerateRay(sshift, ry);
             rd.ryOrigin = ry.o;
             rd.ryDirection = ry.d;
+            
+
             if (wtx == 0.0f || wty == 0.0f) return 0.0f;
             rd.hasDifferentials = true;
             return wt;
         }
 
-        public Transform cam2world { get; set; }
+        public Transform Cam2World { get; set; }
         public Film film { get; set; }
+        public float shutterOpen { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public float shutterClose { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
     }
 }

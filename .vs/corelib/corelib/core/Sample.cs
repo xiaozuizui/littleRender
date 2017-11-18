@@ -24,13 +24,20 @@ namespace corelib.core
         float CameraSample.time { get; set; }
 
         Stack<UInt32> n1D, n2D;
+        float[][] oneD, twoD;
         int Add1D(UInt32 num) { n1D.Push(num);return n1D.Count - 1; }
         int Add2D(UInt32 num) { n2D.Push(num);return n2D.Count - 1; }
 
 
         public Sample(Sampler sampler,SurfaceIntegrator surfaceIntegrator,VolumeIntegrator volumeIntegrator,Scene scene)
         {
-
+            int nPtrs = n1D.Count + n2D.Count;
+            if(nPtrs==0)
+            {
+                oneD = twoD = null;
+            }
         }
+
+        //public void 
     }
 }

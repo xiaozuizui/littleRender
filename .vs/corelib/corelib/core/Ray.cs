@@ -66,15 +66,17 @@ namespace corelib.core
     }
     public class Ray
     {
-        public Ray(float maxT = 1.0f / 0, float minT = 0f)
+        public Ray(float maxT = 1.0f / 0, float minT = 0f,float T = 0f,int D = 0)
         {
             o = new Point3();
             d = new Vector();
             maxt = maxT; mint = minT;
+            time = T;depth = D;
         }
-        public Ray(Point3 p, Vector v, float maxT = 1.0f / 0, float minT = 0f)
+        public Ray(Point3 p, Vector v, float maxT = 1.0f / 0, float minT = 0f, float T = 0f, int D = 0)
         {
             o = p;d = v;maxt = maxT;mint = minT;
+            time = T; depth = D;
         }
 
         public Point3 GetHitPoint(float thit)
@@ -85,8 +87,9 @@ namespace corelib.core
         public Vector d { get; set; }
 
         public float maxt { get; set; }
-
         public float mint { get; set; }
 
+        public int depth { get; set; }
+        public float time { get; set; }
     }
 }
