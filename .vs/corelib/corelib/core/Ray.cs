@@ -40,7 +40,8 @@ namespace corelib.core
         static public Vector operator  -(Vector v1,Vector v2) { return new Vector(v1.x - v2.x, v1.y - v2.y, v1.z - v2.z); }
         static public Vector operator *(float theta,Vector v) { return new Vector(theta * v.x, theta * v.y, theta * v.z); }
         static public Vector operator *(Vector v,float theta) { return new Vector(theta * v.x, theta * v.y, theta * v.z); }
-        
+        static public Vector operator /(Vector v, float theta) { return new Vector(v.x / theta, v.y / theta, v.z / theta); }
+
         public Vector(float xx=0,float yy=0,float zz=0)
         {
            x = xx; y = yy; z = zz;

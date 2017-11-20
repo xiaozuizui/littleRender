@@ -21,7 +21,7 @@ namespace corelib.cameras
             Point3 Pcamera = RasterToCamera.CaculatePoint(Pras);
             ray = new Ray(Pcamera, new Vector(0, 0, 1), 0, INFINITY);
 
-            if (lensRadius > 0.)
+            if (lensRadius > 0.0f)
             {
                 // Sample point on lens
                 float lensU, lensV;
@@ -38,12 +38,23 @@ namespace corelib.cameras
                 ray->o = Point(lensU, lensV, 0.f);
                 ray->d = Normalize(Pfocus - ray->o);
             }
-            ray->time = sample.time;
-            CameraToWorld(*ray, ray);
+
+            ray.time = sample.time;
+            ray = CameraToWorld.CaculateVector(ray);
             return 1.f;
 
         }
 
+        public override float GenerateRayDifferential(CameraSample sample, RayDifferential rd)
+        {
+            Point3 Pras = new Point3(sample.imageX, sample.imageY);
+            Point3 Pcamera = RasterToCamera.CaculatePoint(Pras);
+            rd = new RayDifferential(Pcamera, new Vector(0, 0, 1), 0, INFINITY);
+
+           
+
+            return base.GenerateRayDifferential(sample, rd);
+        }
         private Vector dxCamera { get; set; }
         private Vector dyCamera { get; set; }
     }

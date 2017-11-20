@@ -9,7 +9,7 @@ namespace corelib.core
        
         float GenerateRay(CameraSample sample, Ray ray);
         float GenerateRayDifferential(CameraSample sample, RayDifferential rd);
-        Transform Cam2World { get; set; }
+        Transform CameraToWorld { get; set; }
         float shutterOpen { get; set; }
         float shutterClose { get; set; }
 
@@ -20,7 +20,7 @@ namespace corelib.core
 
         public Camera(Transform c2w, float sopen, float sclose, Film f)
         {
-            Cam2World = c2w;
+            CameraToWorld = c2w;
             film = f;
             
         }
@@ -52,7 +52,7 @@ namespace corelib.core
             return wt;
         }
 
-        public Transform Cam2World { get; set; }
+        public Transform CameraToWorld { get; set; }
         public Film film { get; set; }
         public float shutterOpen { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public float shutterClose { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }

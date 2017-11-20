@@ -73,6 +73,13 @@ namespace corelib.core
             if (w != 1.0f) ptrans = ptrans/ w;
             return ptrans;
         }
+
+        internal Ray CaculateVector(Ray ray)
+        {
+            
+            throw new NotImplementedException();
+        }
+
         public Vector CaculateVector(Vector v)
         {
             float x = v.x, y = v.y, z = v.z;
@@ -82,5 +89,15 @@ namespace corelib.core
         }
         public Matrix4x4 m { get; set; }
         public Matrix4x4 mInv { get; set; }
+    }
+
+
+    public class AnimatedTransform
+    {
+        private float startTime, endTime;
+        Transform startTransform, endTransform;
+        bool actuallyAnimated;
+        Vector[] T;
+        Qu
     }
 }
