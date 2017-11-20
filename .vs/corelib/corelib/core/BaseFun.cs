@@ -14,7 +14,7 @@ namespace corelib.core
         /// <typeparam name="T"></typeparam>
         /// <param name="first"></param>
         /// <param name="second"></param>
-        protected void Swap<T>(T first,T second)
+        protected void  Swap<T>(T first,T second)
         {
             T temp = first;
             first = second;
@@ -394,7 +394,7 @@ namespace corelib.core
                 return Normalize( q1* (1.0f - t) +  q2*t);
             else
             {
-                float theta = Math.Acos(Clamp(cosTheta, -1.f, 1.f));
+                float theta = (float)Math.Acos(Clamp(cosTheta, -1.0f, 1.0f));
                 float thetap = theta * t;
                 Quaternion qperp = Normalize(q2 - q1 * cosTheta);
                 return q1 * (float) Math.Cos(thetap) + qperp * (float)Math.Sin(thetap);

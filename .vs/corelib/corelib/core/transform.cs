@@ -62,7 +62,7 @@ namespace corelib.core
             mInv = invM;
         }
 
-        public Point3 CaculatePoint(Point3 pt)//pt 通过transform变换
+        public Point3 Caculate(Point3 pt)//pt 通过transform变换
         {
             Point3 ptrans = new Point3();
             float x = pt.x, y = pt.y, z = pt.z;
@@ -74,13 +74,8 @@ namespace corelib.core
             return ptrans;
         }
 
-        internal Ray CaculateVector(Ray ray)
-        {
-            
-            throw new NotImplementedException();
-        }
-
-        public Vector CaculateVector(Vector v)
+       
+        public Vector Caculate(Vector v)
         {
             float x = v.x, y = v.y, z = v.z;
             return new Vector(m.m[0,0] * x + m.m[0,1] * y + m.m[0,2] * z,
@@ -94,6 +89,20 @@ namespace corelib.core
 
     public class AnimatedTransform:BaseFun
     {
+        public Ray Caculate(Ray r)
+        {
+            if (!actuallyAnimated || r.time <= startTime)
+                tr = startTransform.Caculate(r);
+            else if (r.time >= endTime)
+                (*endTransform)(r, tr);
+            else
+            {
+                Transform t;
+                Interpolate(r.time, &t);
+                t(r, tr);
+            }
+            tr->time = r.time;
+        }
         public AnimatedTransform(Transform transform1,float time1, Transform transform2,float time2)
         {
             startTime = time1;
@@ -145,7 +154,7 @@ namespace corelib.core
                 R = Rnext;
             } while (++count < 100 && norm > .0001f);
             // XXX TODO FIXME deal with flip...
-            Rquat = new Quaternion(R);
+            Rquat = new Quaternion(new Transform(R));
 
             // Compute scale _S_ using rotation and original matrix
             S = Multiply(Inverse(R), M);

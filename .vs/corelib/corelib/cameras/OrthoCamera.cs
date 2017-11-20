@@ -7,10 +7,10 @@ namespace corelib.cameras
 {
     class OrthoCamera:ProjectiveCamera
     {
-        public OrthoCamera(Transform c2w, Transform proj,float[] screenWindow,float sopen,float sclose,float lensr,float focald, float fov, Film f) : base(c2w, proj, screenWindow, sopen, sclose, lensr, focald, f)
+        public OrthoCamera(AnimatedTransform c2w, Transform proj,float[] screenWindow,float sopen,float sclose,float lensr,float focald, float fov, Film f) : base(c2w, proj, screenWindow, sopen, sclose, lensr, focald, f)
         {
-            dxCamera = RasterToCamera.CaculateVector( new Vector(1, 0, 0));
-            dyCamera = RasterToCamera.CaculateVector(new  Vector(0, 1, 0));
+            dxCamera = RasterToCamera.Caculate( new Vector(1, 0, 0));
+            dyCamera = RasterToCamera.Caculate(new  Vector(0, 1, 0));
         }
 
         // float GenerateRay()
@@ -18,42 +18,89 @@ namespace corelib.cameras
         {
 
             Point3 Pras = new Point3(sample.imageX, sample.imageY);
-            Point3 Pcamera = RasterToCamera.CaculatePoint(Pras);
-            ray = new Ray(Pcamera, new Vector(0, 0, 1), 0, INFINITY);
+            Point3 Pcamera = RasterToCamera.Caculate(Pras);
+            ray = new Ray(Pcamera, new Vector(0, 0, 1), 0, INFINITY);//正交相机方向固定
 
+            //modify ray for depth of filed
             if (lensRadius > 0.0f)
             {
                 // Sample point on lens
-                float lensU, lensV;
+                float lensU=0, lensV=0;
 
-                ConcentricSampleDisk(sample.lensU, sample.lensV, lensU, &lensV);
+                ConcentricSampleDisk(sample.lensU, sample.lensV, ref lensU, ref lensV);
                 lensU *= lensRadius;
                 lensV *= lensRadius;
                  
                 // Compute point on plane of focus
-                float ft = focalDistance / ray->d.z;
-                Point Pfocus = (*ray)(ft);
+                float ft = focalDistance / ray.d.z;
+                Point3 Pfocus =ray.Transfer(ft);
 
                 // Update ray for effect of lens
-                ray->o = Point(lensU, lensV, 0.f);
-                ray->d = Normalize(Pfocus - ray->o);
+                ray.o = new Point3(lensU, lensV, 0.0f);
+                ray.d =  Normalize(Pfocus - ray.o);
             }
 
             ray.time = sample.time;
-            ray = CameraToWorld.CaculateVector(ray);
-            return 1.f;
+            ray = CameraToWorld.Caculate(ray);
+            return 1.0f;
 
         }
 
-        public override float GenerateRayDifferential(CameraSample sample, RayDifferential rd)
+        public override float GenerateRayDifferential(CameraSample sample, RayDifferential ray)
         {
             Point3 Pras = new Point3(sample.imageX, sample.imageY);
-            Point3 Pcamera = RasterToCamera.CaculatePoint(Pras);
-            rd = new RayDifferential(Pcamera, new Vector(0, 0, 1), 0, INFINITY);
+            Point3 Pcamera = RasterToCamera.Caculate(Pras);
+            ray = new RayDifferential(Pcamera, new Vector(0, 0, 1), 0, INFINITY);
 
-           
+            // Modify ray for depth of field
+            if (lensRadius > 0.0)
+            {
+                // Sample point on lens
+                float lensU=0, lensV=0;
+                ConcentricSampleDisk(sample.lensU, sample.lensV, ref lensU, ref lensV);
+                lensU *= lensRadius;
+                lensV *= lensRadius;
 
-            return base.GenerateRayDifferential(sample, rd);
+                // Compute point on plane of focus
+                float ft = focalDistance / ray.d.z;
+                Point3 Pfocus = ray.Transfer(ft);
+
+                // Update ray for effect of lens
+                ray.o = new Point3(lensU, lensV, 0.0f);
+                ray.d = Normalize(Pfocus - ray.o);
+            }
+            ray.time = sample.time;
+            // Compute ray differentials for _OrthoCamera_
+            if (lensRadius > 0)
+            {
+                // Compute _OrthoCamera_ ray differentials with defocus blur
+
+                // Sample point on lens
+                float lensU=0, lensV=0;
+                ConcentricSampleDisk(sample.lensU, sample.lensV, ref lensU,  ref lensV);
+                lensU *= lensRadius;
+                lensV *= lensRadius;
+
+                float ft = focalDistance / ray.d.z;
+
+                Point3 pFocus = Pcamera + dxCamera + (ft * new Vector(0, 0, 1));
+                ray.rxOrigin = new Point3(lensU, lensV, 0.0f);
+                ray.rxDirection = Normalize(pFocus - ray.rxOrigin);
+
+                pFocus = Pcamera + dyCamera + (ft * new Vector(0, 0, 1));
+                ray.ryOrigin = new Point3(lensU, lensV, 0.0f);
+                ray.ryDirection = Normalize(pFocus - ray.ryOrigin);
+            }
+            else
+            {
+                ray.rxOrigin = ray.o + dxCamera;
+                ray.ryOrigin = ray.o + dyCamera;
+                ray.rxDirection = ray.ryDirection = ray.d;
+            }
+            ray.hasDifferentials = true;
+            ray =  CameraToWorld.Caculate( ray);
+
+            return 1.0f;
         }
         private Vector dxCamera { get; set; }
         private Vector dyCamera { get; set; }
