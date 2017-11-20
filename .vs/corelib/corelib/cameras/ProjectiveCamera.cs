@@ -9,7 +9,7 @@ namespace corelib.cameras
     {
        
 
-       public ProjectiveCamera(Transform c2w,Transform proj, float [] screenWindow,float sopen,float sclose, float lensr, float focald,Film f) :base(c2w,sopen,sclose,f) 
+       public ProjectiveCamera(AnimatedTransform c2w,Transform proj, float [] screenWindow,float sopen,float sclose, float lensr, float focald,Film f) :base(c2w,sopen,sclose,f) 
         {
             // Initialize depth of field parameters
             lensRadius = lensr;
