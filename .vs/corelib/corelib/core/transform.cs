@@ -92,12 +92,71 @@ namespace corelib.core
     }
 
 
-    public class AnimatedTransform
+    public class AnimatedTransform:BaseFun
     {
+        public AnimatedTransform(Transform transform1,float time1, Transform transform2,float time2)
+        {
+            startTime = time1;
+            endTime = time2;
+            startTransform = transform1;
+            endTransform = transform2;
+            T = new Vector[2];
+            R = new Quaternion[2];
+            S = new Matrix4x4[2];
+            Decompose(startTransform.m, T[0], R[0], S[0]);
+            Decompose(endTransform.m, T[1], R[0], S[0]);
+
+        }
+
+       public   void Decompose(Matrix4x4 m,Vector T,Quaternion Rquat,Matrix4x4 S)
+        {
+            T.x = m.m[0,3];
+            T.y = m.m[1,3];
+            T.z = m.m[2,3];
+
+            // Compute new transformation matrix _M_ without translation
+            Matrix4x4 M = m;
+            for (int i = 0; i < 3; ++i)
+                M.m[i,3] = M.m[3,i] = 0.0f;
+            M.m[3,3] = 1.0f;
+            
+            // Extract rotation _R_ from transformation matrix
+            float norm;
+            int count = 0;
+            Matrix4x4 R = M;
+            do
+            {
+                // Compute next matrix _Rnext_ in series
+                Matrix4x4 Rnext = new Matrix4x4();
+                Matrix4x4 Rit = Inverse(Transpose(R));
+                for (int i = 0; i < 4; ++i)
+                    for (int j = 0; j < 4; ++j)
+                        Rnext.m[i,j] = 0.5f * (R.m[i,j] + Rit.m[i,j]);
+
+                // Compute norm of difference between _R_ and _Rnext_
+                norm = 0.0f;
+                for (int i = 0; i < 3; ++i)
+                {
+                    float n = Math.Abs(R.m[i,0] - Rnext.m[i,0]) +
+                              Math.Abs(R.m[i,1] - Rnext.m[i,1]) +
+                              Math.Abs(R.m[i,2] - Rnext.m[i,2]);
+                    norm = Math.Max(norm, n);
+                }
+                R = Rnext;
+            } while (++count < 100 && norm > .0001f);
+            // XXX TODO FIXME deal with flip...
+            Rquat = new Quaternion(R);
+
+            // Compute scale _S_ using rotation and original matrix
+            S = Multiply(Inverse(R), M);
+        }
+
         private float startTime, endTime;
         Transform startTransform, endTransform;
         bool actuallyAnimated;
         Vector[] T;
-        Qu
+        Quaternion[] R;
+        Matrix4x4[] S;
+        
     }
 }

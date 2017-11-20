@@ -29,7 +29,7 @@ namespace corelib.cameras
                 ConcentricSampleDisk(sample.lensU, sample.lensV, lensU, &lensV);
                 lensU *= lensRadius;
                 lensV *= lensRadius;
-
+                 
                 // Compute point on plane of focus
                 float ft = focalDistance / ray->d.z;
                 Point Pfocus = (*ray)(ft);
