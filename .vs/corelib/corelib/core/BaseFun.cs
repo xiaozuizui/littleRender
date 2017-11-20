@@ -32,6 +32,21 @@ namespace corelib.core
             return (1.0f - t) * v1 + t * v2;
         }
 
+        protected float Clamp(float val, float low, float high)
+        {
+            if (val < low) return low;
+            else if (val > high) return high;
+            else return val;
+        }
+
+
+        protected int Clamp(int val, int low, int high)
+        {
+            if (val < low) return low;
+            else if (val > high) return high;
+            else return val;
+        }
+
         /// <summary>
         /// 角度转弧度
         /// </summary>
@@ -122,7 +137,7 @@ namespace corelib.core
     }
 
 
-    protected Transform Scale(float x, float y, float z)
+        protected Transform Scale(float x, float y, float z)
         {
             Matrix4x4 m = new Matrix4x4(x, 0, 0, 0,
                 0, y, 0, 0,
@@ -370,6 +385,30 @@ namespace corelib.core
             m[3, 2] = 0.0f;
             Matrix4x4 camToWorld = new Matrix4x4(m); 
             return  new Transform(Inverse(camToWorld), camToWorld);
+        }
+
+        protected Quaternion Slerp(float t,Quaternion q1,Quaternion q2)
+        {
+            float cosTheta = Dot(q1, q2);
+            if (cosTheta > .9995f)
+                return Normalize( q1* (1.0f - t) +  q2*t);
+            else
+            {
+                float theta = Math.Acos(Clamp(cosTheta, -1.f, 1.f));
+                float thetap = theta * t;
+                Quaternion qperp = Normalize(q2 - q1 * cosTheta);
+                return q1 * (float) Math.Cos(thetap) + qperp * (float)Math.Sin(thetap);
+            }
+        }
+
+        protected float Dot(Quaternion q1,Quaternion q2)
+        {
+            return Dot(q1.v, q2.v) + q1.w * q2.w;
+        }
+
+        protected Quaternion Normalize(Quaternion q)
+        {
+            return q / (float)Math.Sqrt(Dot(q, q));
         }
 
         protected void ConcentricSampleDisk(float u1, float u2, ref float dx,ref float dy)

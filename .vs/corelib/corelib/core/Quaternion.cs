@@ -4,7 +4,7 @@ using System.Text;
 
 namespace corelib.core
 {
-    class Quaternion
+    public class Quaternion
     {
 
         static public Quaternion operator+(Quaternion q1,Quaternion q2) { return new Quaternion(q1.v + q2.v, q1.w + q2.w);  }
@@ -18,6 +18,6 @@ namespace corelib.core
             w = W;
         }
         public Vector v { get; set; }
-        float w;
+        public float w { get; set; }
     }
 }
