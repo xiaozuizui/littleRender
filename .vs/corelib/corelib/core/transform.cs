@@ -114,21 +114,44 @@ namespace corelib.core
 
     public class AnimatedTransform:BaseFun
     {
+
+        public Ray Caculate(Ray r)
+        {
+            Ray tr = new Ray();
+            if (!actuallyAnimated || r.time <= startTime)
+                tr = startTransform.Caculate(r);
+            
+            else if (r.time >= endTime)
+                 tr = endTransform.Caculate(r);
+            else
+            {
+                Transform t = new Transform();
+                Interpolate(r.time,  t);
+                tr = t.Caculate(r);
+            }
+            tr.time = r.time;
+            return tr;
+        }
+
         public RayDifferential Caculate(RayDifferential r)
         {
-            RayDifferential tr = new RayDifferential();
+            RayDifferential tr;//= new RayDifferential();
             if (!actuallyAnimated || r.time <= startTime)
                 tr = startTransform.Caculate(r);
             else if (r.time >= endTime)
                 tr =endTransform.Caculate(r);
             else
             {
-                Transform t;
-                Interpolate(r.time, &t);
-                t(r, tr);
+                Transform t= new Transform();
+                Interpolate(r.time, t);
+                tr = t.Caculate(r);
+                
             }
-            tr->time = r.time;
+            tr.time = r.time;
+            return tr;
         }
+
+
         public AnimatedTransform(Transform transform1,float time1, Transform transform2,float time2)
         {
             startTime = time1;
@@ -185,6 +208,37 @@ namespace corelib.core
             // Compute scale _S_ using rotation and original matrix
             S = Multiply(Inverse(R), M);
         }
+
+        public void Interpolate(float time, Transform  t)
+        {
+            // Handle boundary conditions for matrix interpolation
+            if (!actuallyAnimated || time <= startTime)
+            {
+                t = startTransform;
+                return;
+            }
+            if (time >= endTime)
+            {
+                t = endTransform;
+                return;
+            }
+            float dt = (time - startTime) / (endTime - startTime);
+            // Interpolate translation at _dt_
+            Vector trans = (1.0f - dt) * T[0] + dt * T[1];
+
+            // Interpolate rotation at _dt_
+            Quaternion rotate = Slerp(dt, R[0], R[1]);
+
+            // Interpolate scale at _dt_
+            Matrix4x4 scale = new Matrix4x4();
+            for (int i = 0; i < 3; ++i)
+                for (int j = 0; j < 3; ++j)
+                    scale.m[i,j] = Lerp(dt, S[0].m[i,j], S[1].m[i,j]);
+
+            // Compute interpolated matrix as product of interpolated components
+            t = Multiply(Translate(trans) , rotate.ToTransform() , new  Transform(scale));
+        }
+
 
         private float startTime, endTime;
         Transform startTransform, endTransform;
