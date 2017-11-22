@@ -82,6 +82,31 @@ namespace corelib.core
                           m.m[1,0] * x + m.m[1,1] * y + m.m[1,2] * z,
                           m.m[2,0] * x + m.m[2,1] * y + m.m[2,2] * z);
         }
+
+        public Normal Caculate(Normal n)
+        {
+            float x = n.x, y = n.y, z = n.z;
+            return new Normal(mInv.m[0,0] * x + mInv.m[1,0] * y + mInv.m[2,0] * z,
+                          mInv.m[0,1] * x + mInv.m[1,1] * y + mInv.m[2,1] * z,
+                          mInv.m[0,2] * x + mInv.m[1,2] * y + mInv.m[2,2] * z);
+        }
+
+        public Ray Caculate(Ray r)
+        {
+            return new Ray(Caculate(r.o), Caculate(r.d));
+        }
+
+        public RayDifferential Caculate(RayDifferential r)
+        {
+            RayDifferential rd = new RayDifferential(Caculate(r.o), Caculate(r.d));
+            rd.rxOrigin = Caculate(r.rxOrigin);
+            rd.rxDirection = Caculate(r.rxDirection);
+            rd.ryOrigin = Caculate(r.ryOrigin);
+            rd.ryDirection = Caculate(r.ryDirection);
+            rd.hasDifferentials = r.hasDifferentials;
+            return rd;
+
+        }
         public Matrix4x4 m { get; set; }
         public Matrix4x4 mInv { get; set; }
     }
@@ -89,12 +114,13 @@ namespace corelib.core
 
     public class AnimatedTransform:BaseFun
     {
-        public Ray Caculate(Ray r)
+        public RayDifferential Caculate(RayDifferential r)
         {
+            RayDifferential tr = new RayDifferential();
             if (!actuallyAnimated || r.time <= startTime)
                 tr = startTransform.Caculate(r);
             else if (r.time >= endTime)
-                (*endTransform)(r, tr);
+                tr =endTransform.Caculate(r);
             else
             {
                 Transform t;
