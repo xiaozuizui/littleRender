@@ -4,7 +4,7 @@ using System.Text;
 
 namespace corelib.core
 {
-    public class Quaternion
+    public class Quaternion:BaseFun
     {
 
         static public Quaternion operator+(Quaternion q1,Quaternion q2) { return new Quaternion(q1.v + q2.v, q1.w + q2.w);  }
@@ -30,7 +30,7 @@ namespace corelib.core
             else
             {
                 // Compute largest of $x$, $y$, or $z$, then remaining components
-                const int [] nxt = new int{ 1, 2, 0 };
+                 int [] nxt = { 1, 2, 0 };
                 float[]  q = new float[3];
                 int i = 0;
                 if (m.m[1,1] > m.m[0,0]) i = 1;
@@ -57,6 +57,27 @@ namespace corelib.core
         {
             v = q.v;
             w = q.w;
+        }
+
+        public Transform ToTransform()
+        {
+            float xx = v.x * v.x, yy = v.y * v.y, zz = v.z * v.z;
+            float xy = v.x * v.y, xz = v.x * v.z, yz = v.y * v.z;
+            float wx = v.x * w, wy = v.y * w, wz = v.z * w;
+
+            Matrix4x4 m = new Matrix4x4();
+            m.m[0,0] = 1.0f - 2.0f * (yy + zz);
+            m.m[0,1] = 2.0f * (xy + wz);
+            m.m[0,2] = 2.0f * (xz - wy);
+            m.m[1,0] = 2.0f * (xy - wz);
+            m.m[1,1] = 1.0f - 2.0f * (xx + zz);
+            m.m[1,2] = 2.0f * (yz + wx);
+            m.m[2,0] = 2.0f * (xz + wy);
+            m.m[2,1] = 2.0f * (yz - wx);
+            m.m[2,2] = 1.0f - 2.0f * (xx + yy);
+
+            // Transpose since we are left-handed.  Ugh.
+            return new Transform(Transpose(m), m);
         }
         public Vector v { get; set; }
         public float w { get; set; }

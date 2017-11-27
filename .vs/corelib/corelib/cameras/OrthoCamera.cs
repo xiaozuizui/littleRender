@@ -21,7 +21,7 @@ namespace corelib.cameras
             Point3 Pcamera = RasterToCamera.Caculate(Pras);
             ray = new Ray(Pcamera, new Vector(0, 0, 1), 0, INFINITY);//正交相机方向固定
 
-            //modify ray for depth of filed
+            #region modify ray for depth of filed
             if (lensRadius > 0.0f)
             {
                 // Sample point on lens
@@ -39,7 +39,7 @@ namespace corelib.cameras
                 ray.o = new Point3(lensU, lensV, 0.0f);
                 ray.d =  Normalize(Pfocus - ray.o);
             }
-
+            #endregion
             ray.time = sample.time;
             ray = CameraToWorld.Caculate(ray);
             return 1.0f;
@@ -52,7 +52,7 @@ namespace corelib.cameras
             Point3 Pcamera = RasterToCamera.Caculate(Pras);
             ray = new RayDifferential(Pcamera, new Vector(0, 0, 1), 0, INFINITY);
 
-            // Modify ray for depth of field
+            #region Modify ray for depth of field
             if (lensRadius > 0.0)
             {
                 // Sample point on lens
@@ -97,6 +97,8 @@ namespace corelib.cameras
                 ray.ryOrigin = ray.o + dyCamera;
                 ray.rxDirection = ray.ryDirection = ray.d;
             }
+            #endregion
+
             ray.hasDifferentials = true;
             ray =  CameraToWorld.Caculate( ray);
 

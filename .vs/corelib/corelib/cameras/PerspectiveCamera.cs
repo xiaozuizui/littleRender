@@ -17,7 +17,7 @@ namespace corelib.cameras
         /// <param name="focald">focald</param>
         /// <param name="screenWindow">float[4]</param>
         /// 
-        public PerspectiveCamera(Transform c2w, Transform proj,float[] screenWindow,float sopen,float sclose,float lensr,float focald, float fov,Film f) : base(c2w,  proj,  screenWindow,sopen,sclose,lensr,focald,f)
+        public PerspectiveCamera(AnimatedTransform c2w, Transform proj,float[] screenWindow,float sopen,float sclose,float lensr,float focald, float fov,Film f) : base(c2w,  proj,  screenWindow,sopen,sclose,lensr,focald,f)
         {
             
         }
@@ -29,7 +29,7 @@ namespace corelib.cameras
             Point3 Pcamera;
             
 
-            Pcamera = RasterToCamera.CaculatePoint(Pras);//光栅坐标转换为相机坐标 相机为原点
+            Pcamera = RasterToCamera.Caculate(Pras);//光栅坐标转换为相机坐标 相机为原点
 
             ray = new Ray(new Point3(0, 0, 0), Normalize(new Vector(Pcamera)), 0.0f, INFINITY);
             // Modify ray for depth of field

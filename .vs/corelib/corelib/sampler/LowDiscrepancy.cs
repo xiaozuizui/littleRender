@@ -18,21 +18,21 @@ namespace corelib.sampler
             yPos = yPixelStart;
             nPixelSamples = spp;
         }
-        public override int GetMoreSamples(Sampler sample)
-        {
-            if (yPos == yPixelEnd) return 0;
-            if (sampleBuf == null)
-                sampleBuf = new float[LDPixelSampleFloatsNeeded(samples,
-                                                                nPixelSamples)];
-            LDPixelSample(xPos, yPos, shutterOpen, shutterClose,
-                          nPixelSamples, samples, sampleBuf, rng);
-            if (++xPos == xPixelEnd)
-            {
-                xPos = xPixelStart;
-                ++yPos;
-            }
-            return base.GetMoreSamples(sample);
-        }
+        //public override int GetMoreSamples(Sampler sample)
+        //{
+        //    if (yPos == yPixelEnd) return 0;
+        //    if (sampleBuf == null)
+        //        sampleBuf = new float[LDPixelSampleFloatsNeeded(samples,
+        //                                                        nPixelSamples)];
+        //    LDPixelSample(xPos, yPos, shutterOpen, shutterClose,
+        //                  nPixelSamples, samples, sampleBuf, rng);
+        //    if (++xPos == xPixelEnd)
+        //    {
+        //        xPos = xPixelStart;
+        //        ++yPos;
+        //    }
+        //    return base.GetMoreSamples(sample);
+        //}
 
     }
 
