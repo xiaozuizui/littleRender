@@ -19,7 +19,7 @@ namespace corelib.cameras
 
             Point3 Pras = new Point3(sample.imageX, sample.imageY);
             Point3 Pcamera = RasterToCamera.Caculate(Pras);
-            ray = new Ray(Pcamera, new Vector(0, 0, 1), 0, INFINITY);//正交相机方向固定
+            ray = new Ray(Pcamera, new Vector(0, 0, 1), 0, 1.0f/0);//正交相机方向固定
 
             #region modify ray for depth of filed
             if (lensRadius > 0.0f)
@@ -50,7 +50,7 @@ namespace corelib.cameras
         {
             Point3 Pras = new Point3(sample.imageX, sample.imageY);
             Point3 Pcamera = RasterToCamera.Caculate(Pras);
-            ray = new RayDifferential(Pcamera, new Vector(0, 0, 1), 0, INFINITY);
+            ray = new RayDifferential(Pcamera, new Vector(0, 0, 1), 0, 1.0f/0);
 
             #region Modify ray for depth of field
             if (lensRadius > 0.0)
@@ -69,8 +69,10 @@ namespace corelib.cameras
                 ray.o = new Point3(lensU, lensV, 0.0f);
                 ray.d = Normalize(Pfocus - ray.o);
             }
+            #endregion
             ray.time = sample.time;
-            // Compute ray differentials for _OrthoCamera_
+
+            #region Compute ray differentials for _OrthoCamera_
             if (lensRadius > 0)
             {
                 // Compute _OrthoCamera_ ray differentials with defocus blur

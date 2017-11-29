@@ -48,7 +48,7 @@ namespace corelib.core
          
         public Transform(Matrix4x4 M)
         {
-         ;
+            
 
             m = M;
             mInv = Inverse(M);
@@ -152,22 +152,26 @@ namespace corelib.core
         }
 
 
-        public AnimatedTransform(Transform transform1,float time1, Transform transform2,float time2)
+        public AnimatedTransform(Transform StartTransform,float StartTime, Transform EndTransform,float EndTime)
         {
-            startTime = time1;
-            endTime = time2;
-            startTransform = transform1;
-            endTransform = transform2;
+            startTime = StartTime;
+            endTime = EndTime;
+            startTransform = StartTransform;
+            endTransform = EndTransform;
+
             T = new Vector[2];
             R = new Quaternion[2];
             S = new Matrix4x4[2];
-            Decompose(startTransform.m, T[0], R[0], S[0]);
-            Decompose(endTransform.m, T[1], R[0], S[0]);
+            Decompose(startTransform.m, ref T[0], ref R[0],ref S[0]);
+            Decompose(endTransform.m, ref T[1],ref R[1],ref S[1]);
 
         }
 
-       public   void Decompose(Matrix4x4 m,Vector T,Quaternion Rquat,Matrix4x4 S)
+       public void Decompose(Matrix4x4 m,ref Vector T,ref Quaternion Rquat,ref Matrix4x4 S)
         {
+            T = new Vector();
+          //  Rquat = new Quaternion();
+            //S = new Matrix4x4();
             T.x = m.m[0,3];
             T.y = m.m[1,3];
             T.z = m.m[2,3];
@@ -195,10 +199,10 @@ namespace corelib.core
                 norm = 0.0f;
                 for (int i = 0; i < 3; ++i)
                 {
-                    float n = Math.Abs(R.m[i,0] - Rnext.m[i,0]) +
-                              Math.Abs(R.m[i,1] - Rnext.m[i,1]) +
-                              Math.Abs(R.m[i,2] - Rnext.m[i,2]);
-                    norm = Math.Max(norm, n);
+                    float n = (float)Math.Abs(R.m[i,0] - Rnext.m[i,0]) +
+                              (float)Math.Abs(R.m[i,1] - Rnext.m[i,1]) +
+                              (float)Math.Abs(R.m[i,2] - Rnext.m[i,2]);
+                    norm = (float)Math.Max(norm, n);
                 }
                 R = Rnext;
             } while (++count < 100 && norm > .0001f);

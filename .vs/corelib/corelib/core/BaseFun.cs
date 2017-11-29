@@ -6,7 +6,7 @@ namespace corelib.core
 {
     public abstract class BaseFun
     {
-        protected float INFINITY = 99999999;
+        //protected float INFINITY = 99999999;
 
         /// <summary>
         /// Swap
@@ -54,7 +54,7 @@ namespace corelib.core
         /// <returns></returns>
         protected float Radians(float deg)
         {
-            return ((float)Math.PI / 180.0f) * deg;
+            return ((float)(float)Math.PI / 180.0f) * deg;
         }
 
         /// <summary>
@@ -64,7 +64,7 @@ namespace corelib.core
         /// <returns></returns>
         protected float Degress(float rad)
         {
-            return (180.0f / (float)Math.PI) * rad;
+            return (180.0f / (float)(float)Math.PI) * rad;
         }
 
         protected Transform Multiply(Transform t1, Transform t2)
@@ -103,13 +103,24 @@ namespace corelib.core
             
             return Multiply(Multiply(m1,m2),m3);
         }
-
+        /// <summary>
+        /// 正交变换
+        /// </summary>
+        /// <param name="znear"></param>
+        /// <param name="zfar"></param>
+        /// <returns></returns>
         protected Transform Orthographic(float znear, float zfar)
         {
             return Multiply(Scale(1.0f, 1.0f, 1.0f / (zfar - znear)) ,
                    Translate(new Vector(0.0f, 0.0f, -znear)));
         }
-
+        /// <summary>
+        /// 透视变换
+        /// </summary>
+        /// <param name="fov"></param>
+        /// <param name="n"></param>
+        /// <param name="f"></param>
+        /// <returns></returns>
         protected Transform Perspective(float fov, float n, float f)
         {
             // Perform projective divide
@@ -154,8 +165,8 @@ namespace corelib.core
 
         protected Transform RotateX(float angle)
         {
-            float sin_t = (float)Math.Sin(Radians(angle));
-            float cos_t = (float)Math.Cos(Radians(angle));
+            float sin_t = (float)(float)Math.Sin(Radians(angle));
+            float cos_t = (float)(float)Math.Cos(Radians(angle));
             Matrix4x4 m = new Matrix4x4(1,     0,      0, 0,
                 0, cos_t, -sin_t, 0,
                 0, sin_t,  cos_t, 0,
@@ -166,8 +177,8 @@ namespace corelib.core
 
         protected Transform RotateY(float angle)
         {
-            float sin_t = (float)Math.Sin(Radians(angle));
-            float cos_t = (float)Math.Cos(Radians(angle));
+            float sin_t = (float)(float)Math.Sin(Radians(angle));
+            float cos_t = (float)(float)Math.Cos(Radians(angle));
             Matrix4x4 m = new Matrix4x4(cos_t,   0,  sin_t, 0,
                  0,   1,      0, 0,
                 -sin_t,   0,  cos_t, 0,
@@ -178,8 +189,8 @@ namespace corelib.core
 
         protected Transform RotateZ(float angle)
         {
-            float sin_t = (float)Math.Sin(Radians(angle));
-            float cos_t = (float)Math.Cos(Radians(angle));
+            float sin_t = (float)(float)Math.Sin(Radians(angle));
+            float cos_t = (float)(float)Math.Cos(Radians(angle));
             Matrix4x4 m = new Matrix4x4(cos_t, -sin_t, 0, 0,
                 sin_t,  cos_t, 0, 0,
                 0,      0, 1, 0,
@@ -231,9 +242,9 @@ namespace corelib.core
                         {
                             if (ipiv[k] == 0)
                             {
-                                if (Math.Abs(minv[j, k]) >= big)
+                                if ((float)Math.Abs(minv[j, k]) >= big)
                                 {
-                                    big = (Math.Abs(minv[j, k]));
+                                    big = ((float)Math.Abs(minv[j, k]));
                                     irow = j;
                                     icol = k;
                                 }
@@ -397,7 +408,7 @@ namespace corelib.core
                 float theta = (float)Math.Acos(Clamp(cosTheta, -1.0f, 1.0f));
                 float thetap = theta * t;
                 Quaternion qperp = Normalize(q2 - q1 * cosTheta);
-                return q1 * (float) Math.Cos(thetap) + qperp * (float)Math.Sin(thetap);
+                return q1 *  (float)Math.Cos(thetap) + qperp * (float)Math.Sin(thetap);
             }
         }
 
@@ -408,7 +419,7 @@ namespace corelib.core
 
         protected Quaternion Normalize(Quaternion q)
         {
-            return q / (float)Math.Sqrt(Dot(q, q));
+            return q / (float)(float)Math.Sqrt(Dot(q, q));
         }
 
         protected void ConcentricSampleDisk(float u1, float u2, ref float dx,ref float dy)
@@ -458,9 +469,9 @@ namespace corelib.core
                     theta = 6.0f + sx / r;
                 }
             }
-            theta *= (float)Math.PI / 4.0f;
-            dx = r * (float)Math.Cos(theta);
-            dy = r * (float)Math.Sin(theta);
+            theta *= (float)(float)Math.PI / 4.0f;
+            dx = r * (float)(float)Math.Cos(theta);
+            dy = r * (float)(float)Math.Sin(theta);
         }
 
 

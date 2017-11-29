@@ -14,8 +14,9 @@ namespace corelib.core
 
         public Quaternion(Transform t)
         {
+            v = new Vector();
             Matrix4x4  m = t.m;
-            float trace = m.m[0,0] + m.m[1,1] + m.m[2,2];
+            float trace = t.m.m[0,0] + t.m.m[1,1] + t.m.m[2,2];
             if (trace > 0.0f)
             {
                 // Compute w from matrix trace, then xyz
@@ -37,7 +38,7 @@ namespace corelib.core
                 if (m.m[2,2] > m.m[i,i]) i = 2;
                 int j = nxt[i];
                 int k = nxt[j];
-                float s = (float)Math.Sqrt((m.m[i,i] - (m.m[j,j] + m.m[k,k])) + 1.0);
+                float s = (float)(float)Math.Sqrt((m.m[i,i] - (m.m[j,j] + m.m[k,k])) + 1.0);
                 q[i] = s * 0.5f;
                 if (s != 0.0f) s = 0.5f / s;
                 w = (m.m[k,j] - m.m[j,k]) * s;
