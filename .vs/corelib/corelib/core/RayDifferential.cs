@@ -19,7 +19,7 @@ namespace corelib.core
             rxDirection = d + (rxDirection - d) * s;
             ryDirection = d + (ryDirection - d) * s;
         }
-
+        
         public bool hasDifferentials { get; set; }
         public Point3 rxOrigin, ryOrigin;
         public Vector rxDirection, ryDirection;

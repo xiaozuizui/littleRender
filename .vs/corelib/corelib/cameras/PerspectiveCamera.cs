@@ -31,7 +31,7 @@ namespace corelib.cameras
 
             Pcamera = RasterToCamera.Caculate(Pras);//光栅坐标转换为相机坐标 相机为原点
 
-            ray = new Ray(new Point3(0, 0, 0), Normalize(new Vector(Pcamera)), 0.0f, 1.0f/0);
+            ray = new Ray(new Point3(0, 0, 0), LR.Normalize(new Vector(Pcamera)), 0.0f, 1.0f/0);
             // Modify ray for depth of field
             if (lensRadius > 0.0)
             {

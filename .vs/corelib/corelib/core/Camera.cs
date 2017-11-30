@@ -7,15 +7,15 @@ namespace corelib.core
     interface CameraInterface
     {
        
-        float GenerateRay(CameraSample sample, Ray ray);
-        float GenerateRayDifferential(CameraSample sample, RayDifferential rd);
+        float GenerateRay(CameraSample sample,out Ray ray);
+        float GenerateRayDifferential(CameraSample sample, out RayDifferential rd);
         AnimatedTransform CameraToWorld { get; set; }
         float shutterOpen { get; set; }
         float shutterClose { get; set; }
 
     }
 
-    public abstract class Camera: BaseFun,CameraInterface
+    public abstract class Camera: CameraInterface
     {
 
         public Camera(AnimatedTransform c2w, float sopen, float sclose, Film f)
@@ -25,16 +25,22 @@ namespace corelib.core
             
         }
 
-        public virtual float GenerateRay(CameraSample sample, Ray ray) { return 0; } // return value gives a weight for how much light arriving at the film (most return one) 
-
-        public virtual float GenerateRayDifferential(CameraSample sample, RayDifferential rd)
+        public virtual float GenerateRay(CameraSample sample, out RayDifferential rd)
         {
-            float wt = GenerateRay(sample, rd);
+            throw new NotImplementedException();
+        }
+
+        public virtual float GenerateRay(CameraSample sample,out  Ray ray) { ray = new Ray(); return 0; } // return value gives a weight for how much light arriving at the film (most return one) 
+
+        public virtual float GenerateRayDifferential(CameraSample sample, out RayDifferential rd)
+        {
+           // rd = new RayDifferential();
+            float wt = GenerateRay(sample,out rd);
             //x direction
             CameraSample sshift = sample;
             ++(sshift.imageX);
             Ray rx = new Ray();
-            float wtx = GenerateRay(sshift, rx);
+            float wtx = GenerateRay(sshift,out rx);
             rd.rxOrigin = rx.o;
             rd.rxDirection = rx.d;
 
@@ -42,7 +48,7 @@ namespace corelib.core
             --(sshift.imageX);
             ++(sshift.imageY);
             Ray ry = new Ray(); ;
-            float wty = GenerateRay(sshift, ry);
+            float wty = GenerateRay(sshift,out ry);
             rd.ryOrigin = ry.o;
             rd.ryDirection = ry.d;
             
@@ -51,6 +57,8 @@ namespace corelib.core
             rd.hasDifferentials = true;
             return wt;
         }
+
+       
 
         public AnimatedTransform CameraToWorld { get; set; }
         public Film film { get; set; }

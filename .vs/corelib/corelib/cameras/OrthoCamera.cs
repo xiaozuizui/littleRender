@@ -5,16 +5,16 @@ using corelib.core;
 
 namespace corelib.cameras
 {
-    class OrthoCamera:ProjectiveCamera
+    public class OrthoCamera:ProjectiveCamera
     {
-        public OrthoCamera(AnimatedTransform c2w, Transform proj,float[] screenWindow,float sopen,float sclose,float lensr,float focald, float fov, Film f) : base(c2w, proj, screenWindow, sopen, sclose, lensr, focald, f)
+        public OrthoCamera(AnimatedTransform c2w,float[] screenWindow,float sopen,float sclose,float lensr,float focald, Film f) : base(c2w,LR.Orthographic(0,1), screenWindow, sopen, sclose, lensr, focald, f)
         {
-            dxCamera = RasterToCamera.Caculate( new Vector(1, 0, 0));
+            dxCamera = RasterToCamera.Caculate(new Vector(1, 0, 0));
             dyCamera = RasterToCamera.Caculate(new  Vector(0, 1, 0));
         }
 
         // float GenerateRay()
-        public override float GenerateRay(CameraSample sample, Ray ray)
+        public override float GenerateRay(CameraSample sample, out Ray ray)
         {
 
             Point3 Pras = new Point3(sample.imageX, sample.imageY);
@@ -27,7 +27,7 @@ namespace corelib.cameras
                 // Sample point on lens
                 float lensU=0, lensV=0;
 
-                ConcentricSampleDisk(sample.lensU, sample.lensV, ref lensU, ref lensV);
+                LR.ConcentricSampleDisk(sample.lensU, sample.lensV, ref lensU, ref lensV);
                 lensU *= lensRadius;
                 lensV *= lensRadius;
                  
@@ -37,7 +37,7 @@ namespace corelib.cameras
 
                 // Update ray for effect of lens
                 ray.o = new Point3(lensU, lensV, 0.0f);
-                ray.d =  Normalize(Pfocus - ray.o);
+                ray.d =  LR.Normalize(Pfocus - ray.o);
             }
             #endregion
             ray.time = sample.time;
@@ -46,7 +46,7 @@ namespace corelib.cameras
 
         }
 
-        public override float GenerateRayDifferential(CameraSample sample, RayDifferential ray)
+        public override float GenerateRayDifferential(CameraSample sample, out RayDifferential ray)
         {
             Point3 Pras = new Point3(sample.imageX, sample.imageY);
             Point3 Pcamera = RasterToCamera.Caculate(Pras);
@@ -57,7 +57,7 @@ namespace corelib.cameras
             {
                 // Sample point on lens
                 float lensU=0, lensV=0;
-                ConcentricSampleDisk(sample.lensU, sample.lensV, ref lensU, ref lensV);
+                LR.ConcentricSampleDisk(sample.lensU, sample.lensV, ref lensU, ref lensV);
                 lensU *= lensRadius;
                 lensV *= lensRadius;
 
@@ -67,7 +67,7 @@ namespace corelib.cameras
 
                 // Update ray for effect of lens
                 ray.o = new Point3(lensU, lensV, 0.0f);
-                ray.d = Normalize(Pfocus - ray.o);
+                ray.d = LR.Normalize(Pfocus - ray.o);
             }
             #endregion
             ray.time = sample.time;
@@ -79,7 +79,7 @@ namespace corelib.cameras
 
                 // Sample point on lens
                 float lensU=0, lensV=0;
-                ConcentricSampleDisk(sample.lensU, sample.lensV, ref lensU,  ref lensV);
+                LR.ConcentricSampleDisk(sample.lensU, sample.lensV, ref lensU,  ref lensV);
                 lensU *= lensRadius;
                 lensV *= lensRadius;
 
@@ -87,11 +87,11 @@ namespace corelib.cameras
 
                 Point3 pFocus = Pcamera + dxCamera + (ft * new Vector(0, 0, 1));
                 ray.rxOrigin = new Point3(lensU, lensV, 0.0f);
-                ray.rxDirection = Normalize(pFocus - ray.rxOrigin);
+                ray.rxDirection = LR.Normalize(pFocus - ray.rxOrigin);
 
                 pFocus = Pcamera + dyCamera + (ft * new Vector(0, 0, 1));
                 ray.ryOrigin = new Point3(lensU, lensV, 0.0f);
-                ray.ryDirection = Normalize(pFocus - ray.ryOrigin);
+                ray.ryDirection = LR.Normalize(pFocus - ray.ryOrigin);
             }
             else
             {
