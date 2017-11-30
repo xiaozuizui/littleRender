@@ -20,6 +20,7 @@ namespace corelib.core
             second = temp;
         }
         #endregion
+
         #region Lerp
         /// <summary>
         /// return (1.0f - t) * v1 + t * v2;
@@ -33,6 +34,7 @@ namespace corelib.core
             return (1.0f - t) * v1 + t * v2;
         }
         #endregion
+
         #region Clamp
         /// <summary>
         /// Clamp return high or low if val not in [low,high]
@@ -61,6 +63,7 @@ namespace corelib.core
             else return val;
         }
         #endregion
+
         #region Deg to Rad
         /// <summary>
         /// deg to rad
@@ -72,6 +75,7 @@ namespace corelib.core
             return ((float)Math.PI / 180.0f) * deg;
         }
         #endregion
+
         #region Rad to Deg
         /// <summary>
         /// rad to deg
@@ -83,7 +87,8 @@ namespace corelib.core
             return (180.0f / (float)(float)Math.PI) * rad;
         }
         #endregion
-        #region Mutiply
+
+        #region Matrix and Transform Mutiply
         /// <summary>
         /// return Matrix1*Matrix2
         /// </summary>
@@ -102,6 +107,17 @@ namespace corelib.core
             return new Matrix4x4(r);
         }
         /// <summary>
+        /// return Matrix1*Matrix2*Matrix3
+        /// </summary>
+        /// <param name="m1">Matrix1</param>
+        /// <param name="m2">Matrix2</param>
+        /// <param name="m3">Matrix3</param>
+        /// <returns></returns>
+        static Matrix4x4 Multiply(Matrix4x4 m1, Matrix4x4 m2, Matrix4x4 m3)
+        {
+            return Multiply(Multiply(m1, m2), m3);
+        }
+        /// <summary>
         /// reutrn Transform1*Transform2
         /// </summary>
         /// <param name="t1">Transform1</param>
@@ -112,6 +128,76 @@ namespace corelib.core
             Matrix4x4 m1 = Multiply(t1.m, t2.m);
             Matrix4x4 m2 = Multiply(t1.mInv, t2.mInv);
             return new Transform(m1, m2);
+        }
+        /// <summary>
+        /// reutrn Transform1*Transform2*Transform3
+        /// </summary>
+        /// <param name="t1">Transform1</param>
+        /// <param name="t2">Transform2</param>
+        /// <param name="t3">Transform3</param>
+        /// <returns></returns>
+        static public Transform Multiply(Transform t1, Transform t2, Transform t3)
+        {
+            return Multiply(Multiply(t1, t2), t3);
+        }
+        #endregion
+
+        #region Scale
+        /// <summary>
+        /// Scale Transform
+        /// </summary>
+        /// <param name="x">x scale</param>
+        /// <param name="y">y scale</param>
+        /// <param name="z">z scale</param>
+        /// <returns></returns>
+        static public Transform Scale(float x, float y, float z)
+        {
+            Matrix4x4 m = new Matrix4x4(x, 0, 0, 0,
+                0, y, 0, 0,
+                0, 0, z, 0,
+                0, 0, 0, 1);
+            Matrix4x4 minv = new Matrix4x4(1.0f / x, 0, 0, 0,
+                   0, 1.0f / y, 0, 0,
+                   0, 0, 1.0f / z, 0,
+                   0, 0, 0, 1);
+
+            return new Transform(m, minv);
+        }
+        #endregion
+
+        #region Translate
+        /// <summary>
+        /// Translate Transform
+        /// </summary>
+        /// <param name="delta">delta vector</param>
+        /// <returns></returns>
+        static public Transform Translate(Vector delta)
+        {
+            Matrix4x4 m = new Matrix4x4(1, 0, 0, delta.x,
+               0, 1, 0, delta.y,
+               0, 0, 1, delta.z,
+               0, 0, 0, 1);
+            Matrix4x4 minv = new Matrix4x4(1, 0, 0, -delta.x,
+                       0, 1, 0, -delta.y,
+                       0, 0, 1, -delta.z,
+                       0, 0, 0, 1);
+            return new Transform(m, minv);
+        }
+        #endregion
+
+
+        #region Orthographic
+        static Transform Perspective(float fov, float n, float f)
+        {
+            // Perform projective divide
+            Matrix4x4 persp = new Matrix4x4(1, 0, 0, 0,
+                                        0, 1, 0, 0,
+                                        0, 0, f / (f - n), -f * n / (f - n),
+                                        0, 0, 1, 0);
+
+            // Scale to canonical viewing volume
+            float invTanAng = 1.0f / (float)Math.Tan(Radians(fov) / 2.0f);
+            return Multiply(Scale(invTanAng, invTanAng, 1), new Transform(persp));
         }
         #endregion
     }

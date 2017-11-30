@@ -27,9 +27,15 @@ namespace test
             //Transform t = new Transform(M);
 
             // ProjectiveCamera pjc = new ProjectiveCamera(t, t, null, 2, 2, new float[4] { 1.0f, 2.0f, 3.0f, 4.0f });
-            Transform t1 = new Transform(new Matrix4x4(-0.0198209956f, -0.328598410f, -0.944261789f, 396.734772f, -0.999803603f, 0.00651442632f, 0.0187198818f, 54.7861862f, 0.000000000f, 0.944447339f, -0.328662962f, 30.0000000f, 0, 0, 0, 1));
-            Transform t2 = new Transform(new Matrix4x4(-0.0198209956f, -0.328598410f, -0.944261789f, 396.734772f, -0.999803603f, 0.00651442632f, 0.0187198818f, 54.7861862f, 0.000000000f, 0.944447339f, -0.328662962f, 30.0000000f, 0, 0, 0, 1));
-            AnimatedTransform cam2word = new AnimatedTransform(t1,0,t2,1);
+            Matrix4x4 m1 = new Matrix4x4(-0.0198209956f, -0.328598410f, -0.944261789f, 396.734772f, -0.999803603f, 0.00651442632f, 0.0187198818f, 54.7861862f, 0.000000000f, 0.944447339f, -0.328662962f, 30.0000000f, 0, 0, 0, 1);
+            Matrix4x4 m2 = new Matrix4x4(-0.0198209956f, -0.328598410f, -0.944261789f, 396.734772f, -0.999803603f, 0.00651442632f, 0.0187198818f, 54.7861862f, 0.000000000f, 0.944447339f, -0.328662962f, 30.0000000f, 0, 0, 0, 1);
+            Matrix4x4 m3 = LR.Multiply(m1, m2);
+            Transform t = new Transform(m1);
+            Transform t2 = LR.Multiply(LR.Scale(10, 10, 10), t);
+
+            //Transform t1 = new Transform(new Matrix4x4(-0.0198209956f, -0.328598410f, -0.944261789f, 396.734772f, -0.999803603f, 0.00651442632f, 0.0187198818f, 54.7861862f, 0.000000000f, 0.944447339f, -0.328662962f, 30.0000000f, 0, 0, 0, 1));
+           // Transform t2 = new Transform(new Matrix4x4(-0.0198209956f, -0.328598410f, -0.944261789f, 396.734772f, -0.999803603f, 0.00651442632f, 0.0187198818f, 54.7861862f, 0.000000000f, 0.944447339f, -0.328662962f, 30.0000000f, 0, 0, 0, 1));
+           // AnimatedTransform cam2word = new AnimatedTransform(t1,0,t2,1);
             
         }
         static public void  f(Vector v1)
