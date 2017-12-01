@@ -19,7 +19,7 @@ namespace corelib.cameras
 
             Point3 Pras = new Point3(sample.imageX, sample.imageY);
             Point3 Pcamera = RasterToCamera.Caculate(Pras);
-            ray = new Ray(Pcamera, new Vector(0, 0, 1), 0, 1.0f/0);//正交相机方向固定
+            ray = new Ray(Pcamera, new Vector(0, 0, 1), 0, LR.INFINITY);//正交相机方向固定
 
             #region modify ray for depth of filed
             if (lensRadius > 0.0f)

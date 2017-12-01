@@ -28,7 +28,12 @@ namespace test
             film.xResolution = 700;
             film.yResolution = 700;
             OrthoCamera orthoCamera = new OrthoCamera(cam2word, screen, 0, 1, 0, 0, film);
-            orthoCamera.GenerateRay()
+            CameraSample cameraSample = new CameraSample(689.738220f, 678.709778f, 0.559352338f, 0.253510952f, 0.562246382f);
+
+            //cameraSample.imageX = 689.738220f;
+            RayDifferential rd;
+            orthoCamera.GenerateRayDifferential(cameraSample, out rd);
+
         }
         static public void  f(Vector v1)
         {

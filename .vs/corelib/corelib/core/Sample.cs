@@ -6,7 +6,7 @@ using corelib.Integrator;
 
 namespace corelib.core
 {
-    public interface CameraSample
+    public interface CameraSampleInterface
     {
        float imageX { get; set; }
        float imageY { get; set; }
@@ -15,13 +15,33 @@ namespace corelib.core
        float time { get; set; }
     }
 
-    class Sample:CameraSample
+    public struct CameraSample:CameraSampleInterface
     {
-        float CameraSample.imageX { get; set; }
-        float CameraSample.imageY { get; set; }
-        float CameraSample.lensU { get; set; }
-        float CameraSample.lensV { get; set; }
-        float CameraSample.time { get; set; }
+        public CameraSample(float ImageX,float ImageY,float lU,float lV,float Time)
+        {
+            imageX = ImageX;
+            imageY = ImageY;
+
+            //imageX = imageY = 0.0f;
+            lensU = lU;
+            lensV = lV;
+            time = Time;
+        }
+        public float imageX { get; set; }
+        public float imageY { get; set; }
+        public float lensU { get; set; }
+        public float lensV { get; set; }
+        public float time { get; set; }
+    }
+
+    class Sample:CameraSampleInterface
+    {
+
+        float CameraSampleInterface.imageX { get; set; }
+        float CameraSampleInterface.imageY { get; set; }
+        float CameraSampleInterface.lensU { get; set; }
+        float CameraSampleInterface.lensV { get; set; }
+        float CameraSampleInterface.time { get; set; }
 
         Stack<UInt32> n1D, n2D;
         float[][] oneD, twoD;

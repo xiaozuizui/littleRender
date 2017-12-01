@@ -22,7 +22,7 @@ namespace corelib.cameras
             
         }
         //public PerspectiveCamera(Transform c2w) { }
-        override public float GenerateRay(CameraSample sample, Ray ray)
+        override public float GenerateRay(CameraSample sample,out Ray ray)
         {
             Point3 Pras = new Point3(sample.imageX, sample.imageY, 0); //光栅坐标
 
@@ -57,10 +57,10 @@ namespace corelib.cameras
             return 1.0f;
         }
 
-        override public float GenerateRayDifferential(CameraSample sample, RayDifferential ray)
+        override public float GenerateRayDifferential(CameraSample sample, out RayDifferential ray)
         {
             // Generate raster and camera samples
-
+            ray = new RayDifferential(new Point3(),new Vector());
             return 0.0f;
         }
 
