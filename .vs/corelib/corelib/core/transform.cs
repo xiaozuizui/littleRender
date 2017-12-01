@@ -154,8 +154,8 @@ namespace corelib.core
                 tr =endTransform.Caculate(r);
             else
             {
-                Transform t= new Transform();
-                Interpolate(r.time, t);
+                Transform t;
+                Interpolate(r.time,out t);
                 tr = t.Caculate(r);
                 
             }
@@ -237,7 +237,7 @@ namespace corelib.core
         /// </summary>
         /// <param name="time"></param>
         /// <param name="t"></param>
-        public void Interpolate(float time, Transform  t)
+        public void Interpolate(float time, out Transform  t)
         {
             // Handle boundary conditions for matrix interpolation
             if (!actuallyAnimated || time <= startTime)

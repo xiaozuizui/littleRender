@@ -20,22 +20,12 @@ namespace corelib.cameras
                 proj;
 
             // Compute projective camera screen transformations
-            //Debug
 
-            Transform scale1 = LR.Scale(film.xResolution, film.yResolution, 1.0f);
-            Transform scale2 = LR.Scale(1.0f / (screenWindow[1] - screenWindow[0]), 1.0f / (screenWindow[2] - screenWindow[3]), 1.0f);
-            Transform translate = LR.Translate(new Vector(-screenWindow[0], -screenWindow[3], 0.0f));
-            //Debug
-            Transform mi = LR.Multiply(scale1, scale2);
-            ScreenToRaster = LR.Multiply(mi, translate);
+            ScreenToRaster = LR.Multiply(LR.Scale(film.xResolution, film.yResolution, 1.0f),
+                LR.Scale(1.0f / (screenWindow[1] - screenWindow[0]), 1.0f / (screenWindow[2] - screenWindow[3]), 1.0f),
+                LR.Translate(new Vector(-screenWindow[0], -screenWindow[3], 0.0f))
+                );
 
-               
-                
-                      
-                      //NDC coordinates
-               //);
-
-            
             RasterToScreen = LR.Inverse(ScreenToRaster);
             RasterToCamera = LR.Multiply(LR.Inverse(CameraToScreen) , RasterToScreen);
         }
