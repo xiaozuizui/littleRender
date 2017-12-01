@@ -17,7 +17,19 @@ namespace corelib.core
             m = mm;
         }
 
-       
+        /// <summary>
+        ///使用值传递构造函数
+        /// </summary>
+        /// <param name="M"></param>
+        public Matrix4x4(Matrix4x4 M)
+        {
+            m = new float[4, 4];
+        
+            for (int i = 0; i < 4; i++)
+                for (int j = 0; j < 4; j++)
+                    m[i, j] = M.m[i, j];
+         
+        }
         public Matrix4x4(float a11,float a12,float a13,float a14,
                                 float a21,float a22,float a23,float a24,
                                 float a31,float a32,float a33,float a34,
@@ -36,7 +48,7 @@ namespace corelib.core
 
     }
 
-    public class Transform:BaseFun
+    public class Transform
     {
 
         public Transform()
@@ -51,7 +63,7 @@ namespace corelib.core
             
 
             m = M;
-            mInv = Inverse(M);
+            mInv = LR.Inverse(M);
         }
 
         public Transform(Matrix4x4 M,Matrix4x4 invM)
@@ -112,7 +124,7 @@ namespace corelib.core
     }
 
 
-    public class AnimatedTransform:BaseFun
+    public class AnimatedTransform
     {
 
         public Ray Caculate(Ray r)
@@ -162,12 +174,19 @@ namespace corelib.core
             T = new Vector[2];
             R = new Quaternion[2];
             S = new Matrix4x4[2];
-            Decompose(startTransform.m, ref T[0], ref R[0],ref S[0]);
-            Decompose(endTransform.m, ref T[1],ref R[1],ref S[1]);
+            Decompose(startTransform.m, out T[0], out R[0],out S[0]);
+            Decompose(endTransform.m, out T[1],out R[1],out S[1]);
 
         }
 
-       public void Decompose(Matrix4x4 m,ref Vector T,ref Quaternion Rquat,ref Matrix4x4 S)
+        /// <summary>
+        /// M = TRS ,get TRS
+        /// </summary>
+        /// <param name="m"></param>
+        /// <param name="T"></param>
+        /// <param name="Rquat"></param>
+        /// <param name="S"></param>
+       public void Decompose(Matrix4x4 m,out Vector T,out Quaternion Rquat,out Matrix4x4 S)
         {
             T = new Vector();
           //  Rquat = new Quaternion();
@@ -177,7 +196,8 @@ namespace corelib.core
             T.z = m.m[2,3];
 
             // Compute new transformation matrix _M_ without translation
-            Matrix4x4 M = m;
+            Matrix4x4 M = new Matrix4x4(m);
+            
             for (int i = 0; i < 3; ++i)
                 M.m[i,3] = M.m[3,i] = 0.0f;
             M.m[3,3] = 1.0f;
@@ -185,12 +205,12 @@ namespace corelib.core
             // Extract rotation _R_ from transformation matrix
             float norm;
             int count = 0;
-            Matrix4x4 R = M;
+            Matrix4x4 R = new Matrix4x4(M);
             do
             {
                 // Compute next matrix _Rnext_ in series
                 Matrix4x4 Rnext = new Matrix4x4();
-                Matrix4x4 Rit = Inverse(Transpose(R));
+                Matrix4x4 Rit = LR.Inverse(LR.Transpose(R));
                 for (int i = 0; i < 4; ++i)
                     for (int j = 0; j < 4; ++j)
                         Rnext.m[i,j] = 0.5f * (R.m[i,j] + Rit.m[i,j]);
@@ -210,9 +230,13 @@ namespace corelib.core
             Rquat = new Quaternion(new Transform(R));
 
             // Compute scale _S_ using rotation and original matrix
-            S = Multiply(Inverse(R), M);
+            S = LR.Multiply(LR.Inverse(R), M);
         }
-
+        /// <summary>
+        /// 计算t后差值的Transform
+        /// </summary>
+        /// <param name="time"></param>
+        /// <param name="t"></param>
         public void Interpolate(float time, Transform  t)
         {
             // Handle boundary conditions for matrix interpolation
@@ -231,16 +255,16 @@ namespace corelib.core
             Vector trans = (1.0f - dt) * T[0] + dt * T[1];
 
             // Interpolate rotation at _dt_
-            Quaternion rotate = Slerp(dt, R[0], R[1]);
+            Quaternion rotate = LR.Slerp(dt, R[0], R[1]);
 
             // Interpolate scale at _dt_
             Matrix4x4 scale = new Matrix4x4();
             for (int i = 0; i < 3; ++i)
                 for (int j = 0; j < 3; ++j)
-                    scale.m[i,j] = Lerp(dt, S[0].m[i,j], S[1].m[i,j]);
+                    scale.m[i,j] = LR.Lerp(dt, S[0].m[i,j], S[1].m[i,j]);
 
             // Compute interpolated matrix as product of interpolated components
-            t = Multiply(Translate(trans) , rotate.ToTransform() , new  Transform(scale));
+            t = LR.Multiply(LR.Translate(trans) , rotate.ToTransform() , new  Transform(scale));
         }
 
 

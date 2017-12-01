@@ -129,7 +129,7 @@ namespace corelib.core
         static public Transform Multiply(Transform t1, Transform t2)
         {
             Matrix4x4 m1 = Multiply(t1.m, t2.m);
-            Matrix4x4 m2 = Multiply(t1.mInv, t2.mInv);
+            Matrix4x4 m2 = Multiply(t2.mInv, t1.mInv);
             return new Transform(m1, m2);
         }
 
@@ -173,10 +173,8 @@ namespace corelib.core
 
             int[] indxc = new int[4];
             int[] indxr = new int[4];
-            int[] ipiv = new int[4];
-            for (int i = 0; i < 4; i++)
-                ipiv[i] = 0;
-
+            int[] ipiv = new int[4] { 0,0,0,0};
+           
             float[,] minv = new float[4, 4];
             for (int i = 0; i < 4; i++)//使用值传递
                 for (int j = 0; j < 4; j++)

@@ -4,7 +4,7 @@ using System.Text;
 using corelib.core;
 namespace corelib.core
 {
-    public abstract class BaseFun
+    abstract class BaseFun
     {
         //protected float INFINITY = 99999999;
 

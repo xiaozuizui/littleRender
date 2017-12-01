@@ -4,7 +4,7 @@ using System.Text;
 
 namespace corelib.core
 {
-    public class Quaternion:BaseFun
+    public class Quaternion
     {
 
         static public Quaternion operator+(Quaternion q1,Quaternion q2) { return new Quaternion(q1.v + q2.v, q1.w + q2.w);  }
@@ -12,6 +12,11 @@ namespace corelib.core
         static public Quaternion operator *(Quaternion q1, float f) { return new Quaternion(q1.v * f, q1.w * f); }
         static public Quaternion operator /(Quaternion q1, float f) { return new Quaternion(q1.v / f, q1.w / f); }
 
+        public Quaternion()
+        {
+            v =new  Vector();
+            w = 1.0f;
+        }
         public Quaternion(Transform t)
         {
             v = new Vector();
@@ -60,6 +65,11 @@ namespace corelib.core
             w = q.w;
         }
 
+        /// <summary>
+        /// v' = q*v*q-1
+        /// v' = M*v
+        /// </summary>
+        /// <returns></returns>
         public Transform ToTransform()
         {
             float xx = v.x * v.x, yy = v.y * v.y, zz = v.z * v.z;
@@ -78,7 +88,7 @@ namespace corelib.core
             m.m[2,2] = 1.0f - 2.0f * (xx + yy);
 
             // Transpose since we are left-handed.  Ugh.
-            return new Transform(Transpose(m), m);
+            return new Transform(LR.Transpose(m), m);
         }
         public Vector v { get; set; }
         public float w { get; set; }

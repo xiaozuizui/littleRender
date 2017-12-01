@@ -20,8 +20,8 @@ namespace corelib.shapes
                       ray.o.z * ray.o.z - radius * radius;
 
 
-            float [] t = new float[2];
-            if (!Quadratic(A, B, C, t))
+            float[] t;
+            if (!LR.Quadratic(A, B, C, out t))
                 return false;
             
 

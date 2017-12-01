@@ -4,7 +4,7 @@ using System.Text;
 
 namespace corelib.core
 {
-    public class Shape:BaseFun,ShapeInterface
+    public class Shape:ShapeInterface
     {
         public Shape(Transform O2W=null,Transform W2O=null)
         {
