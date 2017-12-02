@@ -26,6 +26,16 @@ namespace corelib.core
         {
             return new Spectrum(s1.color[0]+s2.color[0],s1.color[1]+s2.color[1],s1.color[2]+s2.color[2]);
         }
+        //static public Spectrum operator +(Spectrum s1, Spectrum s2)
+        //{
+        //    return new Spectrum(s1.color[0] + s2.color[0], s1.color[1] + s2.color[1], s1.color[2] + s2.color[2]);
+        //}
+
+        static public Spectrum operator -(Spectrum s1, Spectrum s2)
+        {
+            return new Spectrum(s1.color[0] - s2.color[0], s1.color[1] - s2.color[1], s1.color[2] - s2.color[2]);
+        }
+
         static public Spectrum operator *(Spectrum s1, Spectrum s2)
         {
             return new Spectrum(s1.color[0] * s2.color[0], s1.color[1] * s2.color[1], s1.color[2] * s2.color[2]);
@@ -34,6 +44,20 @@ namespace corelib.core
         {
             return new Spectrum(s1.color[0] * f, s1.color[1] * f, s1.color[2] * f);
         }
+        static public Spectrum operator *(float f,Spectrum s1)
+        {
+            return new Spectrum(s1.color[0] * f, s1.color[1] * f, s1.color[2] * f);
+        }
+
+        static public Spectrum operator /(Spectrum s1, Spectrum s2)
+        {
+            return new Spectrum(s1.color[0] / s2.color[0], s1.color[1] / s2.color[1], s1.color[2] / s2.color[2]);
+        }
+        static public Spectrum operator /(Spectrum s1, float f)
+        {
+            return new Spectrum(s1.color[0] / f, s1.color[1] / f, s1.color[2] / f);
+        }
+
 
         public Spectrum()
         {
