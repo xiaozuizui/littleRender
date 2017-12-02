@@ -16,7 +16,7 @@ namespace corelib.core
         public UInt32 shapeId { get; set; }
         public UInt32 primitiveId{get;set;}
         public DifferentialGeometry dg { get; set; }
-        public BSDF GetBsdf() { return null; }
+       // public BSDF GetBsdf() { return null; }
 
     }
 }

@@ -49,7 +49,7 @@ namespace corelib.core
 
     class SpecularReflection:BxDF
     {
-        public SpecularReflection()
+        public SpecularReflection(Spectrum r,Fresnel f):base(BxDFType.BSDF_REFLECTION|BxDFType.BSDF_SPECULAR)
         {
 
         }
