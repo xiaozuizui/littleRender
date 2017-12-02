@@ -106,6 +106,7 @@ namespace corelib.cameras
 
             return 1.0f;
         }
+
         private Vector dxCamera { get; set; }
         private Vector dyCamera { get; set; }
     }

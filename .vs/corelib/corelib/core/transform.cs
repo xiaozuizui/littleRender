@@ -138,7 +138,7 @@ namespace corelib.core
             else
             {
                 Transform t = new Transform();
-                Interpolate(r.time,  t);
+                Interpolate(r.time, out t);
                 tr = t.Caculate(r);
             }
             tr.time = r.time;

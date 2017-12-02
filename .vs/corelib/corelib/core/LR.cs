@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using corelib.core;
+
 namespace corelib.core
 {
     public static class LR
@@ -355,7 +356,7 @@ namespace corelib.core
 
         #region Orthographic
         /// <summary>
-        /// Return Orthographic Transform
+        /// Return Orthographic Transform (CameraToScreen)
         /// </summary>
         /// <param name="znear">near</param>
         /// <param name="zfar">far</param>

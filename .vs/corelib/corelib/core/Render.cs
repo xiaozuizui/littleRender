@@ -20,7 +20,10 @@ namespace corelib.core
     {
         private Sampler sampler;
         private Camera camera;
+        private bool visualizeObjectId;
+
         private SurfaceIntegrator surfaceIntegrator;
+        private VolumeIntegrator volumeIntegrator;
         //Scene
         public SampleRenderer(Sampler s,Camera c,SurfaceIntegrator f)
         {

@@ -17,7 +17,7 @@ namespace corelib.cameras
         /// <param name="focald">focald</param>
         /// <param name="screenWindow">float[4]</param>
         /// 
-        public PerspectiveCamera(AnimatedTransform c2w, Transform proj,float[] screenWindow,float sopen,float sclose,float lensr,float focald, float fov,Film f) : base(c2w,  proj,  screenWindow,sopen,sclose,lensr,focald,f)
+        public PerspectiveCamera(AnimatedTransform c2w, float[] screenWindow,float sopen,float sclose,float lensr,float focald, float fov,Film f) : base(c2w, LR.Perspective(fov,1e-2f,1000f),screenWindow,sopen,sclose,lensr,focald,f)
         {
             
         }
