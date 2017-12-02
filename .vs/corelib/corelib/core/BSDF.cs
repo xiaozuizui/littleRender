@@ -8,6 +8,7 @@ namespace corelib.core
     {
         BSDF_REFLECTION = 1 << 0,
         BSDF_TRANSMISSION = 1 << 1,
+
         BSDF_DIFFUSE = 1 << 2,
         BSDF_GLOSSY = 1 << 3,
         BSDF_SPECULAR = 1 << 4,
@@ -27,10 +28,73 @@ namespace corelib.core
     }
     class BSDF
     {
+
     }
 
-    class BxDF
+    interface BxDFInterface
     {
+        Spectrum f(Vector wo, Vector wi);
+        Spectrum Sample_f(Vector wo, Vector wi, float u1, float u2, float pdf);
+        Spectrum rho(Vector wo, int nSamples, float samples);
+        Spectrum rho(int nSamples, float samples1, float samples2);
+        float Pdf(Vector wi, Vector wo);
+        BxDFType type { get; set; }
 
+    }
+
+    class BxDF:BxDFInterface
+    {
+        public BxDF(BxDFType T) { type = T; }
+        public bool MatchesFlags(BxDFType flags)
+        {
+            return (type & flags) == type;
+        }
+
+        public virtual Spectrum f(Vector wo, Vector wi) { return new Spectrum(); }
+        public virtual Spectrum Sample_f(Vector wo, Vector wi, float u1, float u2, float pdf) { return new Spectrum(); }//mirror glass
+        public virtual Spectrum rho(Vector wo, int nSamples, float samples) { return new Spectrum(); }//计算反射率
+        public virtual Spectrum rho(int nSamples, float samples1, float samples2) { return new Spectrum(); }
+        public virtual float Pdf(Vector wi, Vector wo) { return 0; }
+
+        public BxDFType type { get; set; }
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    class BRDFTOBTDF:BxDF
+    {
+        public BRDFTOBTDF(ref BxDF b):base(b.type^(BxDFType.BSDF_TRANSMISSION|BxDFType.BSDF_REFLECTION))
+        {
+            brdf = b;
+        }
+
+        override public Spectrum f(Vector wo, Vector wi) { return new Spectrum(); }
+        override public Spectrum Sample_f(Vector wo, Vector wi, float u1, float u2,float pdf) { return new Spectrum(); }
+        override public Spectrum rho( Vector w, int nSamples,  float samples)  { return brdf.rho(BSDFFunction.otherHemisphere(w), nSamples, samples);}
+        override public Spectrum rho(int nSamples,  float samples1,  float samples2)  {return brdf.rho(nSamples, samples1, samples2);}
+        override public float Pdf(Vector wo, Vector wi) { return 0; }
+
+
+        private BxDF brdf;
+
+    }
+
+    class ScaledBxdf:BxDF
+    {
+        
+        public ScaledBxdf(BxDF b,Spectrum sc):base(b.type)
+        {
+            bxdf = b;
+            s = sc;
+        }
+        override public Spectrum f(Vector wo, Vector wi) { return new Spectrum(); }
+        override public Spectrum Sample_f(Vector wo, Vector wi, float u1, float u2, float pdf) { return new Spectrum(); }
+        override public Spectrum rho(Vector w, int nSamples, float samples) { return s*bxdf.rho(w, nSamples, samples); }
+        override public Spectrum rho(int nSamples, float samples1, float samples2) { return bxdf.rho(nSamples, samples1, samples2); }
+        override public float Pdf(Vector wo, Vector wi) { return 0; }
+
+        private BxDF bxdf;
+        private Spectrum s;
     }
 }

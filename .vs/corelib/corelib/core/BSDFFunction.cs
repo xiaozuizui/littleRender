@@ -40,9 +40,15 @@ namespace corelib.core
         }
         #endregion
 
-        public static bool SameHemisphere(Vector w, Vector wp) {
-    return w.z* wp.z > 0.0f;
-    }
+        public static bool SameHemisphere(Vector w, Vector wp)
+        {
+            return w.z* wp.z > 0.0f;
+        }
+
+       public static Vector otherHemisphere(Vector w)
+       {
+            return new Vector(w.x, w.y, -w.z);
+       }
 
 }
 }
