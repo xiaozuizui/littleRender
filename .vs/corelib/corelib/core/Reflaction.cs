@@ -10,8 +10,10 @@ namespace corelib.core
         float Evaluate(float cosi);
     }
 
-    class FresnelDielectric : Fresnel
+    class FresnelDielectric : Fresnel //Dielectric such like mirror
     {
+        public FresnelDielectric(float etai,float etat) { eta_i = etai;eta_t = etat; }
+
         public float Evaluate(float cosi)
         {
             cosi = LR.Clamp(cosi, -1.0f, 1.0f);
@@ -24,7 +26,9 @@ namespace corelib.core
                 LR.Swap(ei, et);
 
             // Compute _sint_ using Snell's law 
-            float sint = ei / et * (float)Math.Sqrt(Math.Max(0.0f, 1.0f - cosi * cosi));
+
+            float sint = ei / et * (float)Math.Sqrt(Math.Max(0.0f, 1.0f - cosi * cosi));//处理溢出？
+
             if (sint >= 1.0)
             {
                 // Handle total internal reflection
@@ -39,8 +43,9 @@ namespace corelib.core
         private float eta_i, eta_t;//反射率
     }
 
-    class FresnelConductor : Fresnel
+    class FresnelConductor : Fresnel //Conductor such like metal
     {
+        public FresnelConductor(float e,float K) { eta = e;k = K; }
 
         public float Evaluate(float cosi) { return BSDFFunction.FrCond(cosi, eta, k); }
 
@@ -51,7 +56,7 @@ namespace corelib.core
     {
         public SpecularReflection(Spectrum r,Fresnel f):base(BxDFType.BSDF_REFLECTION|BxDFType.BSDF_SPECULAR)
         {
-
+             
         }
 
 

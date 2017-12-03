@@ -58,6 +58,19 @@ namespace corelib.core
             return new Spectrum(s1.color[0] / f, s1.color[1] / f, s1.color[2] / f);
         }
 
+        public Spectrum Sqrt()
+        {
+            for (int i = 0; i < 3; i++)
+                color[i] = (float)Math.Sqrt(color[i]);
+            return this;
+        }
+
+        public bool IsBlack()
+        {
+            for(int i=0;i<3;i++)
+                if (color[i] != 0.0f) return false;
+            return true;
+        }
 
         public Spectrum()
         {
@@ -77,7 +90,7 @@ namespace corelib.core
             color[2] = c3;
         }
 
-        private float[] color;
+        public float[] color { get; set; }
 
     }
 }

@@ -34,6 +34,18 @@ namespace corelib.core
         {
             return (1.0f - t) * v1 + t * v2;
         }
+
+        /// <summary>
+        /// Spectrum Lerp
+        /// </summary>
+        /// <param name="t"></param>
+        /// <param name="s1"></param>
+        /// <param name="s2"></param>
+        /// <returns></returns>
+        static public Spectrum Lerp(float t,Spectrum s1,Spectrum s2)
+        {
+            return (1.0f - t) * s1 + t * s2;
+        }
         #endregion
 
         #region Clamp
@@ -62,6 +74,16 @@ namespace corelib.core
             if (val < low) return low;
             else if (val > high) return high;
             else return val;
+        }
+
+        static public Spectrum Clamp(Spectrum s, float low =0,float high=1.0f/0)
+        {
+            Spectrum ret = new Spectrum();
+            for(int i=0;i<3;i++)
+            {
+                ret.color[i] = Clamp(ret.color[i], low, high);
+            }
+            return ret;
         }
         #endregion
 
@@ -607,6 +629,7 @@ namespace corelib.core
                 }
         #endregion
 
+        
         public static float INFINITY = 99999999;
     }
 }
