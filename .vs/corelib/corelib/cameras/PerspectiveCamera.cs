@@ -19,16 +19,14 @@ namespace corelib.cameras
         /// 
         public PerspectiveCamera(AnimatedTransform c2w, float[] screenWindow,float sopen,float sclose,float lensr,float focald, float fov,Film f) : base(c2w, LR.Perspective(fov,1e-2f,1000f),screenWindow,sopen,sclose,lensr,focald,f)
         {
-            
+            dxCamera = RasterToCamera.Caculate(new Point3(1, 0, 0)) - RasterToCamera.Caculate(new Point3(0, 0, 0));
+            dyCamera = RasterToCamera.Caculate(new Point3(0, 1, 0)) - RasterToCamera.Caculate(new Point3(0, 0, 0));
         }
         //public PerspectiveCamera(Transform c2w) { }
         override public float GenerateRay(CameraSample sample,out Ray ray)
         {
             Point3 Pras = new Point3(sample.imageX, sample.imageY, 0); //光栅坐标
-
             Point3 Pcamera;
-            
-
             Pcamera = RasterToCamera.Caculate(Pras);//光栅坐标转换为相机坐标 相机为原点
 
             ray = new Ray(new Point3(0, 0, 0), LR.Normalize(new Vector(Pcamera)), 0.0f, 1.0f/0);
